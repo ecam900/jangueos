@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import AuthGuard from '../lib/AuthGuard';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../styles/theme';
-// import { AuthProvider } from '../lib/auth';
+import { AuthProvider } from '../lib/auth';
 import Layout from '../components/layout/Layout';
+import AuthGuard from '../lib/AuthGuard';
+import { SnackbarProvider } from 'notistack';
 
 export default function MyApp(props) {
-  const { Component, pageProps } = props;
+  const { Component, pageProps, router } = props;
+
+  let responsiveTextTheme = responsiveFontSizes(theme);
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -26,16 +29,28 @@ export default function MyApp(props) {
   return (
     <React.Fragment>
       <Head>
-        <title>ec_Boilerplate</title>
+        <title>jangueo</title>
         <meta
           name='viewport'
           content='minimum-scale=1, initial-scale=1, width=device-width'
         />
       </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <AuthGuard>{getLayout(<Component {...pageProps} />)}</AuthGuard>
+      <ThemeProvider theme={responsiveTextTheme}>
+        {/* Firebase Auth */}
+        <AuthProvider>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <AuthGuard>
+              <div>
+                {getLayout(<Component {...pageProps} key={router.key} />)}
+              </div>
+            </AuthGuard>
+          </SnackbarProvider>
+        </AuthProvider>
       </ThemeProvider>
     </React.Fragment>
   );
