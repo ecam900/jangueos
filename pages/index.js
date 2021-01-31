@@ -1,7 +1,9 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Paper, TextField, Typography } from '@material-ui/core';
 import Head from 'next/head';
+import GroupJoinPane from '../components/GroupJoinPane';
 import Feature from '../components/home/Feature';
 import features from '../components/home/features';
+import { useAuth } from '../lib/auth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,21 +18,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
+  const auth = useAuth();
+
   return (
     <div className={classes.root}>
-      <div>
-        <Typography align='center' variant='h2'>
-          Ready To Go With:
-        </Typography>
-        <div className={classes.featureList}>
-          {features &&
-            features.map((featureInfo, i) => (
-              <>
-                <Feature key={i} feature={featureInfo} />
-              </>
-            ))}
-        </div>
-      </div>
+      <GroupJoinPane />
+      {/* <GroupJoinPane />
+      <GroupJoinPane /> */}
     </div>
   );
 }

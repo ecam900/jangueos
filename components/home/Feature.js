@@ -31,14 +31,14 @@ const Feature = ({ feature }) => {
     <div className={classes.root}>
       <div className={classes.overlay} />
       {feature && (
-        <>
+        <div>
           <Typography className={classes.name} variant='h3'>
             {feature.name}
           </Typography>
           <Typography className={classes.description} variant='body1'>
             {feature.description}
           </Typography>
-        </>
+        </div>
       )}
     </div>
   );
