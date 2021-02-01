@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -89,8 +89,6 @@ const SetPassword = () => {
           enqueueSnackbar(`Los otros te veran como: ${values.username}`, {
             variant: 'default',
           });
-        })
-        .then((response) => {
           router.push('/');
         })
         .catch((err) => {
@@ -101,6 +99,12 @@ const SetPassword = () => {
         });
     });
   };
+
+  useEffect(() => {
+    if (auth.userData) {
+      router.push('/');
+    }
+  }, [auth.userData]);
 
   return (
     <div className={classes.root}>

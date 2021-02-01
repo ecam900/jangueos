@@ -1,6 +1,9 @@
 import { Button, makeStyles, Typography } from '@material-ui/core';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useAuth } from '../../lib/auth';
+import layoutVariants from './layoutVariants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   topNav: {
     minHeight: '10vh',
     color: theme.palette.primary.main,
-    backgroundColor: 'lightgrey',
+    backgroundColor: theme.palette.background.default,
     paddingLeft: theme.spacing(6),
     paddingRight: theme.spacing(6),
     display: 'flex',
@@ -19,11 +22,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
 
-  childrenWrapper: { flexGrow: '1' },
+  childrenWrapper: {
+    flexGrow: '1',
+    overflowX: 'hidden',
+  },
   footer: {
     flexShrink: 0,
     minHeight: '10vh',
-    backgroundColor: 'lightgrey',
+    backgroundColor: theme.palette.background.default,
     paddingLeft: theme.spacing(6),
     paddingRight: theme.spacing(6),
     display: 'flex',
@@ -37,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
 const Layout = ({ children }) => {
   const classes = useStyles();
   const auth = useAuth();
+  const router = useRouter();
+
   return (
     <div className={classes.root}>
       <div className={classes.topNav}>
@@ -51,7 +59,20 @@ const Layout = ({ children }) => {
           </Button>
         )}
       </div>
-      <div className={classes.childrenWrapper}>{children}</div>
+      <div className={classes.childrenWrapper}>
+        <AnimatePresence exitBeforeEnter>
+          <motion.div
+            style={{ height: '100%' }}
+            variants={layoutVariants}
+            initial='hidden'
+            animate='visible'
+            exit='exit'
+            key={router.route}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </div>
       <div className={classes.footer}>
         <Typography style={{ width: '100%' }} align='center' variant='caption'>
           copyright © jangueo {new Date().getFullYear()}
