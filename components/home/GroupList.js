@@ -2,7 +2,9 @@ import { Container, Paper, Typography, Button } from '@material-ui/core';
 import { Router } from 'next/router';
 import React from 'react';
 import GroupItem from './GroupItem';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { listVariants, listItemVariants } from './animationVariants';
 
 const GroupList = ({ groups }) => {
   return (
@@ -20,16 +22,26 @@ const GroupList = ({ groups }) => {
           <Button component='a'>Crear Grupo</Button>
         </Link>
 
-        {groups &&
-          groups.map((group) => (
-            <GroupItem
-              key={group.name}
-              groupname={group.name}
-              description={group.shortDescription}
-              author={group.authorDisplay}
-              slug={group.slug}
-            />
-          ))}
+        {groups && (
+          <motion.div
+            variants={listVariants}
+            initial='hidden'
+            animate='visible'
+            exit='exit'
+          >
+            {groups.map((group) => (
+              <motion.div key={group.name} variants={listItemVariants}>
+                <GroupItem
+                  key={group.name}
+                  groupname={group.name}
+                  description={group.shortDescription}
+                  author={group.authorDisplay}
+                  slug={group.slug}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
         {/* </Paper> */}
       </Container>
     </div>
