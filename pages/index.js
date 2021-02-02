@@ -45,30 +45,32 @@ export default function Home() {
   const router = useRouter();
 
   // State
-  const [groups, setGroups] = useState([]);
 
-  // Hooks
-  const { fetchGroups } = useGroups();
+  const { userGroups, fetchUserGroupsInfo, groupsLoading } = useGroups();
 
   useEffect(() => {
-    async function getGroups() {
-      let groups = await fetchGroups();
-      setGroups(groups);
+    if (!userGroups) {
+      console.log('fetching...');
+      fetchUserGroupsInfo();
     }
-
-    getGroups();
-  }, []);
+    console.log('Found Data: ', userGroups);
+  }, [userGroups]);
 
   return (
     <div className={classes.root}>
       <div className={classes.groupsSection}>
         <Container align='center' maxWidth='md'>
-          <GroupList groups={groups} />
-
-          {groups.length < 1 && (
-            <Typography className={classes.containerItem}>
-              No eres miembro de ningun grupo 🙃
-            </Typography>
+          {!groupsLoading && (
+            <>
+              <GroupList
+                key={'grouplist'}
+                groupsLoading={groupsLoading}
+                userGroups={userGroups}
+              />
+              <Typography className={classes.containerItem}>
+                No eres miembro de ningun grupo 🙃
+              </Typography>
+            </>
           )}
         </Container>
       </div>

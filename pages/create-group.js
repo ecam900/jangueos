@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import firebase from '../lib/firebase';
 import { useAuth } from '../lib/auth';
 import marked from 'marked';
+import { ChevronLeft } from '@material-ui/icons';
 
 const db = firebase.firestore();
 
@@ -30,6 +31,14 @@ const useStyles = makeStyles((theme) => ({
   },
   error: {
     color: theme.palette.secondary.main,
+  },
+  backButton: {
+    display: 'flex',
+    alignItems: 'center',
+    color: theme.palette.primary.main,
+    fontSize: '20px',
+    cursor: 'pointer',
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -73,6 +82,10 @@ const CreateGroup = () => {
       <Typography align='center' variant='h3'>
         Crea Un Grupo
       </Typography>
+      <div onClick={() => router.back()} className={classes.backButton}>
+        <ChevronLeft />
+        <Typography style={{ fontSize: '1.5rem' }}>P'atras</Typography>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           className={classes.inputs}
@@ -117,7 +130,7 @@ const CreateGroup = () => {
             <TextField
               {...props}
               className={classes.inputs}
-              label='Descripcion - [tip: ☕MD Enabled ✌]'
+              label='Detalles -☕Markdown Enabled ✌'
               autoComplete='false'
               variant='outlined'
               fullWidth
