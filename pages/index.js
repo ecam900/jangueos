@@ -56,7 +56,7 @@ export default function Home() {
       setGroups(groups);
     }
 
-    getGroups();
+    if (auth.userData) getGroups();
   }, []);
 
   return (
