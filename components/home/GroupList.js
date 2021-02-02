@@ -31,7 +31,9 @@ const GroupList = () => {
         .get()
         .then((res) => {
           console.log('Got result for:::: ', res.data());
-          setUserGroups((userGroups) => [...userGroups, res.data()]);
+          if (!userGroups.includes(res.data())) {
+            setUserGroups((userGroups) => [...userGroups, res.data()]);
+          }
         });
     });
     setLoading(false);
