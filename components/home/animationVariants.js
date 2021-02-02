@@ -7,7 +7,7 @@ export const listVariants = {
     transition: {
       duration: 0.1,
       when: 'beforeChildren',
-      staggerChildren: 5,
+      staggerChildren: 0.5,
     },
   },
   exit: {

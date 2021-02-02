@@ -43,7 +43,7 @@ const GroupJoinPane = () => {
       <TextField
         className={classes.input}
         variant='outlined'
-        placeholder='tel'
+        placeholder='password'
       />
       <Typography
         className={classes.submitButton}

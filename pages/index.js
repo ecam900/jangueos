@@ -38,38 +38,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const myGroups = [
+  {
+    author: '1',
+    authorDisplay: 'Eric',
+    description: 'lalalalala',
+    shortDescription: 'lololalaksdjflaksdjfaf',
+    name: 'Gargolandia',
+    slug: 'bleh',
+  },
+  {
+    author: '2',
+    authorDisplay: 'Andres',
+    description: 'lalalalala',
+    shortDescription: 'lololalaksdjflaksdjfaf',
+    name: 'Blehlandia',
+    slug: 'gargo',
+  },
+];
+
 export default function Home() {
   const classes = useStyles();
   const auth = useAuth();
   const theme = useTheme();
   const router = useRouter();
 
-  // State
-  const [groups, setGroups] = useState([]);
-
-  // Hooks
-  const { fetchGroups } = useGroups();
-
-  useEffect(() => {
-    async function getGroups() {
-      let groups = await fetchGroups();
-      setGroups(groups);
-    }
-
-    if (auth.userData) getGroups();
-  }, []);
 
   return (
     <div className={classes.root}>
       <div className={classes.groupsSection}>
         <Container align='center' maxWidth='md'>
-          <GroupList groups={groups} />
-
-          {groups.length < 1 && (
-            <Typography className={classes.containerItem}>
-              No eres miembro de ningun grupo 🙃
-            </Typography>
-          )}
+          <GroupList />
         </Container>
       </div>
       {/* <GroupJoinPane /> */}
