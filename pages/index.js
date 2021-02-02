@@ -63,6 +63,7 @@ export default function Home() {
   const theme = useTheme();
   const router = useRouter();
 
+
   return (
     <div className={classes.root}>
       <div className={classes.groupsSection}>
