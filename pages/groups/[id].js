@@ -2,23 +2,37 @@ import {
   Button,
   Container,
   makeStyles,
+  Paper,
   TextField,
   Typography,
 } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useAuth } from '../../lib/auth';
 import marked from 'marked';
 import firebase from '../../lib/firebase';
 import ChannelsGrid from '../../components/groups/ChannelsGrid';
+import { ChevronLeft } from '@material-ui/icons';
 
 const db = firebase.firestore();
 
 const useStyles = makeStyles((theme) => ({
-  root: { height: '100%' },
+  root: { height: '100%', paddingBottom: theme.spacing(2) },
   descriptionMarkdown: {
     padding: theme.spacing(2),
+  },
+  groupDescriptionSection: {
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(6),
+  },
+  backButton: {
+    display: 'flex',
+    alignItems: 'center',
+    color: theme.palette.primary.main,
+    fontSize: '20px',
+    cursor: 'pointer',
   },
 }));
 
@@ -126,6 +140,10 @@ const GroupDetail = () => {
           >
             {groupInfo?.name}
           </Typography>
+          <div onClick={() => router.back()} className={classes.backButton}>
+            <ChevronLeft />
+            <Typography style={{ fontSize: '1.5rem' }}>P'atras</Typography>
+          </div>
 
           <ChannelsGrid />
 
@@ -133,42 +151,47 @@ const GroupDetail = () => {
             <Button>Crear Canal</Button>
           </Container>
 
-          {isOwner() && (
-            <Container align='right'>
-              <Button
-                onClick={() => setEditMode(!editMode)}
-                color='primary'
-                variant='outlined'
-              >
-                {editMode ? 'Volver' : 'Edit'}
-              </Button>
-            </Container>
-          )}
-
-          {!editMode ? (
-            <div
-              className={classes.descriptionMarkdown}
-              dangerouslySetInnerHTML={{
-                __html: marked(groupInfo.description),
-              }}
-            ></div>
-          ) : (
-            <>
-              <TextField
-                fullWidth
-                variant='outlined'
-                multiline
-                value={editFieldValue}
-                onChange={handleEditChange}
-              />
-
+          <Paper elevation={4} className={classes.groupDescriptionSection}>
+            <Typography align='center' color='primary' variant='h3'>
+              Descripcion de Grupo
+            </Typography>
+            {isOwner() && (
               <Container align='right'>
-                <Button onClick={handleSaveEdit} color='primary'>
-                  Guardar
+                <Button
+                  onClick={() => setEditMode(!editMode)}
+                  color='primary'
+                  variant='outlined'
+                >
+                  {editMode ? 'Volver' : 'Edit'}
                 </Button>
               </Container>
-            </>
-          )}
+            )}
+
+            {!editMode ? (
+              <div
+                className={classes.descriptionMarkdown}
+                dangerouslySetInnerHTML={{
+                  __html: marked(groupInfo.description),
+                }}
+              ></div>
+            ) : (
+              <>
+                <TextField
+                  fullWidth
+                  variant='outlined'
+                  multiline
+                  value={editFieldValue}
+                  onChange={handleEditChange}
+                />
+
+                <Container align='right'>
+                  <Button onClick={handleSaveEdit} color='primary'>
+                    Guardar
+                  </Button>
+                </Container>
+              </>
+            )}
+          </Paper>
         </Container>
       )}
     </>

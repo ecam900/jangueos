@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
+    overflowX: 'hidden',
   },
   topNav: {
     minHeight: '10vh',
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
   childrenWrapper: {
     flexGrow: '1',
-    overflowX: 'hidden',
+    // overflowX: 'hidden',
   },
   footer: {
     flexShrink: 0,
@@ -50,7 +51,7 @@ const Layout = ({ children }) => {
       <div className={classes.topNav}>
         <div className={classes.logo}>
           <Link href='/'>
-            <Typography variant='h3'>jangueo</Typography>
+            <Typography variant='h3'>discuscioni</Typography>
           </Link>
         </div>
         {auth.user && (

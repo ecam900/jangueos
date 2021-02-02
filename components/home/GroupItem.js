@@ -33,7 +33,7 @@ const GroupItem = ({ groupname, description, author, slug }) => {
   const router = useRouter();
   return (
     <div className={classes.root}>
-      <Container align='left' maxSize='md'>
+      <Container align='left' maxWidth='md'>
         <motion.div whileTap={{ scale: 0.95 }}>
           <Link href={`/groups/${slug}`} passHref>
             <Paper className={classes.cardPaper}>
