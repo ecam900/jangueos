@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const GroupItem = ({ groupname, description, author, slug }) => {
   const classes = useStyles();
   const router = useRouter();
+
   return (
     <div className={classes.root}>
       <Container align='left' maxWidth='md'>

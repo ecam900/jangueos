@@ -1,13 +1,13 @@
 export const listVariants = {
   hidden: {
-    opacitiy: '0',
+    opacitiy: 0,
   },
   visible: {
-    opacity: '1',
+    opacity: 1,
     transition: {
       duration: 0.1,
       when: 'beforeChildren',
-      staggerChildren: 5,
+      staggerChildren: 0.5,
     },
   },
   exit: {

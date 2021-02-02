@@ -38,40 +38,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const myGroups = [
+  {
+    author: '1',
+    authorDisplay: 'Eric',
+    description: 'lalalalala',
+    shortDescription: 'lololalaksdjflaksdjfaf',
+    name: 'Gargolandia',
+    slug: 'bleh',
+  },
+  {
+    author: '2',
+    authorDisplay: 'Andres',
+    description: 'lalalalala',
+    shortDescription: 'lololalaksdjflaksdjfaf',
+    name: 'Blehlandia',
+    slug: 'gargo',
+  },
+];
+
 export default function Home() {
   const classes = useStyles();
   const auth = useAuth();
   const theme = useTheme();
   const router = useRouter();
 
-  // State
-
-  const { userGroups, fetchUserGroupsInfo, groupsLoading } = useGroups();
-
-  useEffect(() => {
-    if (!userGroups) {
-      console.log('fetching...');
-      fetchUserGroupsInfo();
-    }
-    console.log('Found Data: ', userGroups);
-  }, [userGroups]);
-
   return (
     <div className={classes.root}>
       <div className={classes.groupsSection}>
         <Container align='center' maxWidth='md'>
-          {!groupsLoading && (
-            <>
-              <GroupList
-                key={'grouplist'}
-                groupsLoading={groupsLoading}
-                userGroups={userGroups}
-              />
-              <Typography className={classes.containerItem}>
-                No eres miembro de ningun grupo 🙃
-              </Typography>
-            </>
-          )}
+          <GroupList />
         </Container>
       </div>
       {/* <GroupJoinPane /> */}
