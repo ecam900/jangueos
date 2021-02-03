@@ -77,6 +77,7 @@ const CreateRoom = () => {
 
     await createRoom(groupID, values)
       .then(() => {
+        router.back();
         console.log('done');
       })
       .catch((err) => {

@@ -1,6 +1,6 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import useRooms from '../../lib/useRooms';
+import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,9 +14,18 @@ const RoomsGrid = ({ rooms }) => {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item>
-          <Typography>Grid Item</Typography>
-        </Grid>
+        <motion.div>
+          {rooms &&
+            rooms.map((room, i) => {
+              return (
+                <motion.div key={i}>
+                  <Grid item>
+                    <Typography>{room.name}</Typography>
+                  </Grid>
+                </motion.div>
+              );
+            })}
+        </motion.div>
       </Grid>
     </div>
   );

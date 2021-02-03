@@ -12,6 +12,7 @@ import Link from 'next/link';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
+    overflow: 'hidden',
   },
 
   title: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   cardPaper: {
     padding: theme.spacing(2),
     cursor: 'pointer',
+    overflow: 'hidden',
   },
   author: {
     color: theme.palette.grey[500],
