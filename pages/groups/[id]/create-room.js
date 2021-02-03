@@ -10,13 +10,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import useGroups from '../lib/useGroups';
 import { useRouter } from 'next/router';
-import { useAuth } from '../lib/auth';
+import { useRooms } from '../../../lib/useRooms';
+import { useAuth } from '../../../lib/auth';
 import { ChevronLeft } from '@material-ui/icons';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import { Grid } from '@giphy/react-components';
-import GiphyGifs from '../components/GiphyGifs';
-import SearchExperience from '../components/GiphySearchExperience';
+import GiphyGifs from '../../../components/GiphyGifs';
+import SearchExperience from '../../../components/GiphySearchExperience';
 
 // Giphy setup
 
@@ -44,14 +45,14 @@ const useStyles = makeStyles((theme) => ({
 
 const schema = yup.object().shape({
   name: yup.string().min(6).max(30).required(),
-  description: yup.string().min(15).max(2000),
-  shortDescription: yup.string().min(10).max(100),
+  description: yup.string().min(10).max(100),
 });
 
-const CreateGroup = () => {
+const CreateRoom = () => {
   const classes = useStyles();
   const router = useRouter();
   const auth = useAuth();
+  const consumeRooms = useRooms();
 
   const [markdownPreview, setMarkdownPreview] = useState('');
   //SNACKBARS
@@ -61,26 +62,34 @@ const CreateGroup = () => {
   const [values, setValues] = useState({
     name: '',
     description: '',
-    shortDescription: '',
   });
   const { handleSubmit, control, errors } = useForm({
     resolver: yupResolver(schema),
   });
-  const { createGroup, loading } = useGroups();
+  const { createRoom, loading } = consumeRooms;
 
   const onSubmit = async (values) => {
-    await createGroup(values).then(() =>
-      router.push('/').catch((err) => {
-        console.log(err);
-      })
+    const path = router.asPath;
+    const groupID = path.substring(
+      path.indexOf('/', 3) + 1,
+      path.lastIndexOf('/')
     );
+
+    await createRoom(groupID, values)
+      .then(() => {
+        router.back();
+        console.log('done');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <Container align='center' maxWidth='md'>
       {/* <Paper> */}
       <Typography align='center' variant='h3'>
-        Crea Un Grupo
+        Crea Un Cuarto
       </Typography>
       <div onClick={() => router.back()} className={classes.backButton}>
         <ChevronLeft />
@@ -108,33 +117,15 @@ const CreateGroup = () => {
           className={classes.inputs}
           control={control}
           defaultValue=''
-          name='shortDescription'
-          render={(props) => (
-            <TextField
-              {...props}
-              className={classes.inputs}
-              label='Descripcion Corta'
-              autoComplete='false'
-              variant='outlined'
-              fullWidth
-              type='text'
-            />
-          )}
-        />
-        <Controller
-          className={classes.inputs}
-          control={control}
-          defaultValue=''
           name='description'
           render={(props) => (
             <TextField
               {...props}
               className={classes.inputs}
-              label='Detalles -☕Markdown Enabled ✌'
+              label='Descripcion de Canal 👋'
               autoComplete='false'
               variant='outlined'
               fullWidth
-              multiline
               type='text'
             />
           )}
@@ -157,4 +148,4 @@ const CreateGroup = () => {
   );
 };
 
-export default CreateGroup;
+export default CreateRoom;

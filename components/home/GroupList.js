@@ -19,19 +19,21 @@ const GroupList = () => {
 
   // Effects
   useEffect(() => {
-    const memberships = auth.userData.memberships;
-    console.log('Getting group info for: ', memberships);
+    if (auth.userData) {
+      const memberships = auth.userData.memberships;
+      console.log('Getting group info for: ', memberships);
 
-    memberships.forEach((group) => {
-      db.collection('groups')
-        .doc(group)
-        .get()
-        .then((res) => {
-          console.log('Got result for:::: ', res.data());
+      memberships.forEach((group) => {
+        db.collection('groups')
+          .doc(group)
+          .get()
+          .then((res) => {
+            console.log('Got result for:::: ', res.data());
 
-          setUserGroups((userGroups) => [...userGroups, res.data()]);
-        });
-    });
+            setUserGroups((userGroups) => [...userGroups, res.data()]);
+          });
+      });
+    }
     setLoading(false);
   }, []);
 
