@@ -31,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
   },
   backButton: {
     display: 'flex',
+    paddingTop: theme.spacing(4),
     alignItems: 'center',
     color: theme.palette.primary.main,
-    fontSize: '20px',
+    fontSize: '.5rem',
     cursor: 'pointer',
   },
   descriptionMarkdown: {
@@ -154,7 +155,7 @@ const GroupDetail = () => {
           </Typography>
           <div onClick={() => router.back()} className={classes.backButton}>
             <ChevronLeft />
-            <Typography style={{ fontSize: '1.5rem' }}>P'atras</Typography>
+            <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
           </div>
 
           {rooms && <RoomsGrid rooms={rooms} />}
@@ -162,7 +163,7 @@ const GroupDetail = () => {
             <Container align='center'>
               <Button
                 onClick={() =>
-                  router.push(`/xgroups/${groupInfo.slug}/create-room`)
+                  router.push(`/groups/${groupInfo.slug}/create-room`)
                 }
               >
                 Crear Cuarto

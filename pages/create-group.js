@@ -34,11 +34,11 @@ const useStyles = makeStyles((theme) => ({
   },
   backButton: {
     display: 'flex',
+    paddingTop: theme.spacing(4),
     alignItems: 'center',
     color: theme.palette.primary.main,
-    fontSize: '20px',
+    fontSize: '.5rem',
     cursor: 'pointer',
-    marginTop: theme.spacing(2),
   },
 }));
 
@@ -84,7 +84,7 @@ const CreateGroup = () => {
       </Typography>
       <div onClick={() => router.back()} className={classes.backButton}>
         <ChevronLeft />
-        <Typography style={{ fontSize: '1.5rem' }}>P'atras</Typography>
+        <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller

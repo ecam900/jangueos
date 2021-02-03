@@ -10,8 +10,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import useRooms from '../../../lib/useRooms';
 import { useRouter } from 'next/router';
+import { useRooms } from '../../../lib/useRooms';
 import { useAuth } from '../../../lib/auth';
 import { ChevronLeft } from '@material-ui/icons';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
   backButton: {
     display: 'flex',
+    paddingTop: theme.spacing(4),
     alignItems: 'center',
     color: theme.palette.primary.main,
-    fontSize: '20px',
+    fontSize: '.5rem',
     cursor: 'pointer',
-    marginTop: theme.spacing(2),
   },
 }));
 
@@ -52,6 +52,7 @@ const CreateRoom = () => {
   const classes = useStyles();
   const router = useRouter();
   const auth = useAuth();
+  const consumeRooms = useRooms();
 
   const [markdownPreview, setMarkdownPreview] = useState('');
   //SNACKBARS
@@ -65,7 +66,7 @@ const CreateRoom = () => {
   const { handleSubmit, control, errors } = useForm({
     resolver: yupResolver(schema),
   });
-  const { createRoom, loading } = useRooms();
+  const { createRoom, loading } = consumeRooms;
 
   const onSubmit = async (values) => {
     const path = router.asPath;
@@ -91,7 +92,7 @@ const CreateRoom = () => {
       </Typography>
       <div onClick={() => router.back()} className={classes.backButton}>
         <ChevronLeft />
-        <Typography style={{ fontSize: '1.5rem' }}>P'atras</Typography>
+        <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
