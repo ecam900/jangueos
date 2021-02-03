@@ -38,31 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const myGroups = [
-  {
-    author: '1',
-    authorDisplay: 'Eric',
-    description: 'lalalalala',
-    shortDescription: 'lololalaksdjflaksdjfaf',
-    name: 'Gargolandia',
-    slug: 'bleh',
-  },
-  {
-    author: '2',
-    authorDisplay: 'Andres',
-    description: 'lalalalala',
-    shortDescription: 'lololalaksdjflaksdjfaf',
-    name: 'Blehlandia',
-    slug: 'gargo',
-  },
-];
-
 export default function Home() {
   const classes = useStyles();
   const auth = useAuth();
   const theme = useTheme();
   const router = useRouter();
-
 
   return (
     <div className={classes.root}>

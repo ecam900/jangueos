@@ -18,7 +18,7 @@ const LoadingScreen = () => {
         variant='h5'
         style={{ fontWeight: 'bold' }}
       >
-        LOADING
+        'Perate
       </Typography>
     </Container>
   );

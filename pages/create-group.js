@@ -2,7 +2,6 @@ import {
   Button,
   Container,
   makeStyles,
-  Paper,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -13,12 +12,13 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import useGroups from '../lib/useGroups';
 import { useRouter } from 'next/router';
-import firebase from '../lib/firebase';
 import { useAuth } from '../lib/auth';
-import marked from 'marked';
 import { ChevronLeft } from '@material-ui/icons';
+import { Grid } from '@giphy/react-components';
+import GiphyGifs from '../components/GiphyGifs';
+import SearchExperience from '../components/GiphySearchExperience';
 
-const db = firebase.firestore();
+// Giphy setup
 
 const useStyles = makeStyles((theme) => ({
   form: { display: 'flex', flexDirection: 'column' },
@@ -150,6 +150,9 @@ const CreateGroup = () => {
         </Button>
       </form>
       {/* </Paper> */}
+      <SearchExperience>
+        <GiphyGifs />
+      </SearchExperience>
     </Container>
   );
 };
