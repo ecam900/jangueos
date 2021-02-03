@@ -69,8 +69,9 @@ const Login = () => {
   };
 
   const handleEmailAndPasswordLogin = async (email, password) => {
+    const sanitizedEmail = email.toLowerCase();
     await auth
-      .passwordLogin(email, password)
+      .passwordLogin(sanitizedEmail, password)
       .then((response) => {
         if (response.user) {
           enqueueSnackbar(`Wepa - estas logged in.`, {

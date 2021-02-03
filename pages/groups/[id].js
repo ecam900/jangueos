@@ -11,10 +11,12 @@ import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../lib/auth';
+import { useRooms } from '../../lib/useRooms';
 import marked from 'marked';
 import firebase from '../../lib/firebase';
-import ChannelsGrid from '../../components/groups/ChannelsGrid';
+import RoomsGrid from '../../components/groups/RoomsGrid';
 import { ChevronLeft } from '@material-ui/icons';
+import Link from 'next/link';
 
 const db = firebase.firestore();
 
@@ -34,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
     cursor: 'pointer',
   },
+  descriptionMarkdown: {
+    // width: '80vw',
+    fontSize: '1reonm',
+  },
 }));
 
 const GroupDetail = () => {
@@ -42,14 +48,20 @@ const GroupDetail = () => {
   const [editMode, setEditMode] = useState(false);
   const [editFieldValue, setEditFieldValue] = useState('');
   const auth = useAuth();
+  const consumeRooms = useRooms();
   const [groupInfo, setGroupInfo] = useState(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true);
 
   const { id } = router.query;
 
+  const { rooms, fetchRooms } = consumeRooms;
+
   useEffect(() => {
-    console.log;
+    fetchRooms();
+  }, []);
+
+  useEffect(() => {
     async function getGroupInfo() {
       if (auth.user && !groupInfo) {
         const groupInfo = await db
@@ -145,11 +157,18 @@ const GroupDetail = () => {
             <Typography style={{ fontSize: '1.5rem' }}>P'atras</Typography>
           </div>
 
-          <ChannelsGrid />
-
-          <Container align='center'>
-            <Button>Crear Canal</Button>
-          </Container>
+          {rooms && <RoomsGrid rooms={rooms} />}
+          {isOwner() && (
+            <Container align='center'>
+              <Button
+                onClick={() =>
+                  router.push(`/xgroups/${groupInfo.slug}/create-room`)
+                }
+              >
+                Crear Cuarto
+              </Button>
+            </Container>
+          )}
 
           <Paper elevation={4} className={classes.groupDescriptionSection}>
             <Typography align='center' color='primary' variant='h3'>

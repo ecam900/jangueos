@@ -1,5 +1,6 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
+import useRooms from '../../lib/useRooms';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -7,8 +8,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChannelsGrid = () => {
+const RoomsGrid = ({ rooms }) => {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <Grid container>
@@ -20,4 +22,4 @@ const ChannelsGrid = () => {
   );
 };
 
-export default ChannelsGrid;
+export default RoomsGrid;
