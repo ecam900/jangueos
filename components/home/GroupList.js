@@ -17,9 +17,6 @@ const GroupList = () => {
   const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Hooks
-  // const { fetchUserGroupsInfo } = useGroups();
-
   // Effects
   useEffect(() => {
     const memberships = auth.userData.memberships;
@@ -55,11 +52,22 @@ const GroupList = () => {
         {loading
           ? 'loading'
           : userGroups && (
-              <div>
+              <motion.div
+                key={'group-key'}
+                initial='hidden'
+                animate='visible'
+                variants={listVariants}
+                exit='exit'
+              >
                 {userGroups.map((group, i) => (
-                  <motion.div key={group.name} variants={listItemVariants}>
+                  <motion.div
+                    initial='hidden'
+                    animate='visible'
+                    exit='exit'
+                    key={i}
+                    variants={listItemVariants}
+                  >
                     <GroupItem
-                      key={i.toString()}
                       groupname={group.name}
                       description={group.shortDescription}
                       author={group.authorDisplay}
@@ -67,7 +75,7 @@ const GroupList = () => {
                     />
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             )}
 
         {userGroups.length < 1 && (
