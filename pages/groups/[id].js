@@ -11,12 +11,12 @@ import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../lib/auth';
-import { useRooms } from '../../lib/useRooms';
 import marked from 'marked';
 import firebase from '../../lib/firebase';
 import RoomsGrid from '../../components/groups/RoomsGrid';
 import { ChevronLeft } from '@material-ui/icons';
 import Link from 'next/link';
+import useRooms from '../../lib/useRooms';
 
 const db = firebase.firestore();
 
@@ -49,18 +49,18 @@ const GroupDetail = () => {
   const [editMode, setEditMode] = useState(false);
   const [editFieldValue, setEditFieldValue] = useState('');
   const auth = useAuth();
-  const consumeRooms = useRooms();
   const [groupInfo, setGroupInfo] = useState(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true);
 
   const { id } = router.query;
 
-  const { rooms, fetchRooms } = consumeRooms;
+  const { rooms, roomsLoading } = useRooms();
 
   useEffect(() => {
-    fetchRooms();
-  }, []);
+    console.log('Rooms is ==> ', rooms);
+    console.log('Loading is ==>', roomsLoading);
+  }, [roomsLoading]);
 
   useEffect(() => {
     async function getGroupInfo() {

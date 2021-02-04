@@ -8,7 +8,6 @@ import { AuthProvider } from '../lib/auth';
 import Layout from '../components/layout/Layout';
 import AuthGuard from '../lib/AuthGuard';
 import { SnackbarProvider } from 'notistack';
-import { RoomsProvider } from '../lib/useRooms';
 
 export default function MyApp(props) {
   const { Component, pageProps, router } = props;
@@ -45,13 +44,11 @@ export default function MyApp(props) {
             maxSnack={3}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           >
-            <RoomsProvider>
-              <AuthGuard>
-                <div>
-                  {getLayout(<Component {...pageProps} key={router.key} />)}
-                </div>
-              </AuthGuard>
-            </RoomsProvider>
+            <AuthGuard>
+              <div>
+                {getLayout(<Component {...pageProps} key={router.key} />)}
+              </div>
+            </AuthGuard>
           </SnackbarProvider>
         </AuthProvider>
       </ThemeProvider>
