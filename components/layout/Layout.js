@@ -1,4 +1,4 @@
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, Container, makeStyles, Typography } from '@material-ui/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -16,8 +16,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '10vh',
     color: theme.palette.primary.main,
     backgroundColor: theme.palette.background.default,
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(6),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -48,18 +46,20 @@ const Layout = ({ children }) => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.topNav}>
-        <div className={classes.logo}>
-          <Link href='/'>
-            <Typography variant='h3'>discuscioni</Typography>
-          </Link>
+      <Container maxWidth='lg'>
+        <div className={classes.topNav}>
+          <div className={classes.logo}>
+            <Link href='/'>
+              <Typography variant='h3'>dimelo</Typography>
+            </Link>
+          </div>
+          {auth.user && (
+            <Button onClick={() => auth.signOut()} size='small' color='primary'>
+              LOG OUT
+            </Button>
+          )}
         </div>
-        {auth.user && (
-          <Button onClick={() => auth.signOut()} size='small' color='primary'>
-            LOG OUT
-          </Button>
-        )}
-      </div>
+      </Container>
       <div className={classes.childrenWrapper}>
         <AnimatePresence exitBeforeEnter>
           <motion.div

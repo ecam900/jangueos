@@ -21,7 +21,12 @@ import useRooms from '../../lib/useRooms';
 const db = firebase.firestore();
 
 const useStyles = makeStyles((theme) => ({
-  root: { height: '100%', paddingBottom: theme.spacing(2) },
+  root: {
+    height: '100%',
+    paddingBottom: theme.spacing(2),
+    background: `url('/DuneBg.svg') no-repeat center center`,
+    backgroundSize: 'cover',
+  },
   descriptionMarkdown: {
     padding: theme.spacing(2),
   },
@@ -56,7 +61,6 @@ const GroupDetail = () => {
   const { id } = router.query;
 
   const { rooms, roomsLoading } = useRooms();
-
   useEffect(() => {
     console.log('Rooms is ==> ', rooms);
     console.log('Loading is ==>', roomsLoading);

@@ -32,7 +32,6 @@ const GroupList = () => {
         <Link href='/create-group' passHref>
           <Button component='a'>Crear Grupo</Button>
         </Link>
-        userGroups && (
         <motion.div
           key={'group-key'}
           initial='hidden'
@@ -57,7 +56,6 @@ const GroupList = () => {
             </motion.div>
           ))}
         </motion.div>
-        )}
         {userGroups.length < 1 && (
           <Typography>No eres miembro de ningun grupo 🙃</Typography>
         )}
