@@ -1,4 +1,9 @@
-import { Button, Container, makeStyles, Typography } from '@material-ui/core';
+import {
+  Button,
+  Container,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -15,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   topNav: {
     minHeight: '10vh',
     color: theme.palette.primary.main,
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -54,7 +59,11 @@ const Layout = ({ children }) => {
             </Link>
           </div>
           {auth.user && (
-            <Button onClick={() => auth.signOut()} size='small' color='primary'>
+            <Button
+              onClick={() => auth.signOut()}
+              size='small'
+              color='primary'
+            >
               LOG OUT
             </Button>
           )}
@@ -75,7 +84,11 @@ const Layout = ({ children }) => {
         </AnimatePresence>
       </div>
       <div className={classes.footer}>
-        <Typography style={{ width: '100%' }} align='center' variant='caption'>
+        <Typography
+          style={{ width: '100%' }}
+          align='center'
+          variant='caption'
+        >
           copyright © jangueo {new Date().getFullYear()}
         </Typography>
       </div>

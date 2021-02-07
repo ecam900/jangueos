@@ -44,7 +44,9 @@ const useStyles = makeStyles((theme) => ({
   },
   descriptionMarkdown: {
     // width: '80vw',
-    fontSize: '1reonm',
+    color: theme.palette.text.primary,
+    opacity: 0.85,
+    fontSize: '1rem',
   },
 }));
 
@@ -119,9 +121,12 @@ const GroupDetail = () => {
         .doc(groupInfo.slug)
         .set({ description: editFieldValue }, { merge: true })
         .then(() => {
-          enqueueSnackbar(`Nice - Cambiaste el la descripcion de tu grupo`, {
-            variant: 'success',
-          });
+          enqueueSnackbar(
+            `Nice - Cambiaste el la descripcion de tu grupo`,
+            {
+              variant: 'success',
+            }
+          );
           router.reload();
         })
         .catch((err) => {
@@ -157,7 +162,10 @@ const GroupDetail = () => {
           >
             {groupInfo?.name}
           </Typography>
-          <div onClick={() => router.back()} className={classes.backButton}>
+          <div
+            onClick={() => router.back()}
+            className={classes.backButton}
+          >
             <ChevronLeft />
             <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
           </div>
