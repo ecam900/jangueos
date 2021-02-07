@@ -13,29 +13,11 @@ const db = firebase.firestore();
 
 const GroupList = () => {
   const auth = useAuth();
+  const groups = useGroups();
   // State
-  const [userGroups, setUserGroups] = useState([]);
-  const [loading, setLoading] = useState(true);
 
+  const { userGroups } = groups;
   // Effects
-  useEffect(() => {
-    if (auth.userData) {
-      const memberships = auth.userData.memberships;
-      console.log('Getting group info for: ', memberships);
-
-      memberships.forEach((group) => {
-        db.collection('groups')
-          .doc(group)
-          .get()
-          .then((res) => {
-            console.log('Got result for:::: ', res.data());
-
-            setUserGroups((userGroups) => [...userGroups, res.data()]);
-          });
-      });
-    }
-    setLoading(false);
-  }, []);
 
   return (
     <div>
@@ -50,36 +32,32 @@ const GroupList = () => {
         <Link href='/create-group' passHref>
           <Button component='a'>Crear Grupo</Button>
         </Link>
-
-        {loading
-          ? 'loading'
-          : userGroups && (
-              <motion.div
-                key={'group-key'}
-                initial='hidden'
-                animate='visible'
-                variants={listVariants}
-                exit='exit'
-              >
-                {userGroups.map((group, i) => (
-                  <motion.div
-                    initial='hidden'
-                    animate='visible'
-                    exit='exit'
-                    key={i}
-                    variants={listItemVariants}
-                  >
-                    <GroupItem
-                      groupname={group.name}
-                      description={group.shortDescription}
-                      author={group.authorDisplay}
-                      slug={group.slug}
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-
+        userGroups && (
+        <motion.div
+          key={'group-key'}
+          initial='hidden'
+          animate='visible'
+          variants={listVariants}
+          exit='exit'
+        >
+          {userGroups.map((group, i) => (
+            <motion.div
+              initial='hidden'
+              animate='visible'
+              exit='exit'
+              key={i}
+              variants={listItemVariants}
+            >
+              <GroupItem
+                groupname={group.name}
+                description={group.shortDescription}
+                author={group.authorDisplay}
+                slug={group.slug}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+        )}
         {userGroups.length < 1 && (
           <Typography>No eres miembro de ningun grupo 🙃</Typography>
         )}
