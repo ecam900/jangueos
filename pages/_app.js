@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
+import {
+  responsiveFontSizes,
+  ThemeProvider,
+} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../styles/theme';
 import { AuthProvider } from '../lib/auth';
 import Layout from '../components/layout/Layout';
 import AuthGuard from '../lib/AuthGuard';
+import '../styles/global.css';
 import { SnackbarProvider } from 'notistack';
 
 export default function MyApp(props) {

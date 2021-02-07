@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
   },
   topNav: {
-    minHeight: '10vh',
+    minHeight: '5vh',
     color: theme.palette.primary.main,
     // backgroundColor: theme.palette.background.default,
     display: 'flex',
@@ -89,7 +89,7 @@ const Layout = ({ children }) => {
           align='center'
           variant='caption'
         >
-          copyright © jangueo {new Date().getFullYear()}
+          copyright © dimelo {new Date().getFullYear()}
         </Typography>
       </div>
     </div>
