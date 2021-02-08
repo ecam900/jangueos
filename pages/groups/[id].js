@@ -23,7 +23,7 @@ const db = firebase.firestore();
 const useStyles = makeStyles((theme) => ({
   svgBGroot: {
     height: '100%',
-    background: `url('/DuneBg.svg') no-repeat center center`,
+    background: `url('/dunebg.svg') no-repeat center center`,
     backgroundSize: 'cover',
   },
   root: {
@@ -124,12 +124,9 @@ const GroupDetail = () => {
         .doc(groupInfo.slug)
         .set({ description: editFieldValue }, { merge: true })
         .then(() => {
-          enqueueSnackbar(
-            `Nice - Cambiaste el la descripcion de tu grupo`,
-            {
-              variant: 'success',
-            }
-          );
+          enqueueSnackbar(`Nice - Cambiaste el la descripcion de tu grupo`, {
+            variant: 'success',
+          });
           router.reload();
         })
         .catch((err) => {
@@ -161,15 +158,12 @@ const GroupDetail = () => {
             <Typography
               style={{ paddingTop: '1rem' }}
               align='center'
-              color='primary'
+              // color='primary'
               variant='h3'
             >
               {groupInfo?.name}
             </Typography>
-            <div
-              onClick={() => router.back()}
-              className={classes.backButton}
-            >
+            <div onClick={() => router.back()} className={classes.backButton}>
               <ChevronLeft />
               <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
             </div>
@@ -187,10 +181,7 @@ const GroupDetail = () => {
               </Container>
             )}
 
-            <Paper
-              elevation={4}
-              className={classes.groupDescriptionSection}
-            >
+            <Paper elevation={4} className={classes.groupDescriptionSection}>
               <Typography align='center' color='primary' variant='h3'>
                 Descripcion de Grupo
               </Typography>

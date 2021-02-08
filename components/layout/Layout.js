@@ -3,12 +3,17 @@ import {
   Container,
   makeStyles,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@material-ui/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useAuth } from '../../lib/auth';
+import HamburgerMenu from '../HamburgerMenu';
 import layoutVariants from './layoutVariants';
+import MenuModal from './MenuModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     height: '100vh',
     overflowX: 'hidden',
+    position: 'relative',
   },
   topNav: {
     minHeight: '5vh',
@@ -42,12 +48,25 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     cursor: 'pointer',
   },
+
+  hamburger: {
+    width: '10%',
+    color: theme.palette.primary.main,
+    cursor: 'pointer',
+  },
 }));
 
 const Layout = ({ children }) => {
   const classes = useStyles();
   const auth = useAuth();
   const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // Menu Modal State
+  const [open, setOpen] = useState(false);
+
+  const { signOut } = auth;
 
   return (
     <div className={classes.root}>
@@ -55,17 +74,25 @@ const Layout = ({ children }) => {
         <div className={classes.topNav}>
           <div className={classes.logo}>
             <Link href='/'>
-              <Typography variant='h3'>dimelo</Typography>
+              <Typography variant='h1' style={{ fontSize: '2rem' }}>
+                dimelo
+              </Typography>
             </Link>
           </div>
-          {auth.user && (
-            <Button
-              onClick={() => auth.signOut()}
-              size='small'
-              color='primary'
-            >
+          {auth.user && !isMobile && (
+            <Button onClick={() => signOut()} size='small' color='primary'>
               LOG OUT
             </Button>
+          )}
+
+          {auth.user && isMobile && (
+            <motion.div
+              whileTap={{ scale: 0.8 }}
+              onClick={() => setOpen(!open)}
+              className={classes.hamburger}
+            >
+              <HamburgerMenu />
+            </motion.div>
           )}
         </div>
       </Container>
@@ -84,14 +111,12 @@ const Layout = ({ children }) => {
         </AnimatePresence>
       </div>
       <div className={classes.footer}>
-        <Typography
-          style={{ width: '100%' }}
-          align='center'
-          variant='caption'
-        >
+        <Typography style={{ width: '100%' }} align='center' variant='caption'>
           copyright © dimelo {new Date().getFullYear()}
         </Typography>
       </div>
+
+      <MenuModal open={open} signOut={signOut} />
     </div>
   );
 };

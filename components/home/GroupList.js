@@ -24,10 +24,10 @@ const GroupList = () => {
       <Container maxWidth='md'>
         <Typography
           style={{ paddingBottom: '2rem' }}
-          variant='h3'
+          variant='h2'
           color='primary'
         >
-          Tus Grupos
+          Membresias
         </Typography>
         <Link href='/create-group' passHref>
           <Button component='a'>Crear Grupo</Button>
