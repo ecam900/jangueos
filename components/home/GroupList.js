@@ -11,7 +11,7 @@ import firebase from '../../lib/firebase';
 
 const db = firebase.firestore();
 
-const GroupList = () => {
+const GroupList = ({ open, setOpen }) => {
   const auth = useAuth();
   const groups = useGroups();
   // State
@@ -29,9 +29,13 @@ const GroupList = () => {
         >
           Membresias
         </Typography>
-        <Link href='/create-group' passHref>
-          <Button component='a'>Crear Grupo</Button>
-        </Link>
+
+        <Button onClick={() => setOpen(!open)}>UNETE A UN GRUPO</Button>
+        {auth.userData.role.admin && (
+          <Link href='/create-group' passHref>
+            <Button component='a'>CREAR GRUPO</Button>
+          </Link>
+        )}
         <motion.div
           key={'group-key'}
           initial='hidden'

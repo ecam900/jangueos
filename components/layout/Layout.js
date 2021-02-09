@@ -1,5 +1,6 @@
 import {
   Button,
+  ClickAwayListener,
   Container,
   makeStyles,
   Typography,
@@ -50,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   hamburger: {
+    [theme.breakpoints.up('md')]: {
+      width: '5%',
+    },
     width: '10%',
     color: theme.palette.primary.main,
     cursor: 'pointer',
@@ -79,13 +83,13 @@ const Layout = ({ children }) => {
               </Typography>
             </Link>
           </div>
-          {auth.user && !isMobile && (
+          {/* {auth.user && !isMobile && (
             <Button onClick={() => signOut()} size='small' color='primary'>
               LOG OUT
             </Button>
-          )}
+          )} */}
 
-          {auth.user && isMobile && (
+          {auth.user && (
             <motion.div
               whileTap={{ scale: 0.8 }}
               onClick={() => setOpen(!open)}
@@ -116,7 +120,7 @@ const Layout = ({ children }) => {
         </Typography>
       </div>
 
-      <MenuModal open={open} signOut={signOut} />
+      <MenuModal open={open} signOut={signOut} setOpen={setOpen} />
     </div>
   );
 };

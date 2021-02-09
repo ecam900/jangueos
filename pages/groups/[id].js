@@ -91,7 +91,7 @@ const GroupDetail = () => {
       if (auth.userData && groupInfo?.members) {
         let members = groupInfo?.members ?? [];
 
-        if (!members.includes(auth.userData.email)) {
+        if (!members.includes(auth.user.uid)) {
           console.log('got false');
           setLoading(false);
           enqueueSnackbar(`Tu no tienes acceso a este grupo.`, {
