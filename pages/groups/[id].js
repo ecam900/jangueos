@@ -25,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     paddingTop: '10vh',
     width: '100%',
-    background: `url('/dunebg.svg') no-repeat center center`,
+    background: `url('/dunebg.svg') no-repeat 0 0 fixed`,
     backgroundSize: 'cover',
+    // backgroundColor: 'red',
   },
   root: {
     height: '100% ',
@@ -151,8 +152,8 @@ const GroupDetail = () => {
     <>
       <motion.div
         className={classes.svgBGroot}
-        animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
-        initial={{ opacity: 0 }}
+        // animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
+        // initial={{ opacity: 0 }}
       >
         {loading && (
           <Typography variant='h3' color='primary' align='center'>
