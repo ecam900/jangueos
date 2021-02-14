@@ -41,7 +41,7 @@ const schema = yup.object().shape({
   description: yup.string().min(15).max(500),
 });
 
-const CreatePost = ({ room, id }) => {
+const CreatePost = ({ room, id, setOpenCreate }) => {
   const classes = useStyles();
   const router = useRouter();
 
@@ -60,7 +60,9 @@ const CreatePost = ({ room, id }) => {
   const { createPost, loading } = usePosts();
 
   const onSubmit = async (values) => {
-    await createPost(id, room, values);
+    await createPost(id, room, values).then(() => {
+      setOpenCreate(false);
+    });
 
     console.log(values);
   };

@@ -32,8 +32,11 @@ const useStyles = makeStyles((theme) => ({
     height: '100% ',
     paddingBottom: theme.spacing(2),
   },
+
   paper: {
     width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
@@ -41,6 +44,7 @@ const RoomDetail = () => {
   const classes = useStyles();
   const router = useRouter();
   const auth = useAuth();
+  const [openCreate, setOpenCreate] = useState(false);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const { room, id } = router.query;
@@ -57,11 +61,10 @@ const RoomDetail = () => {
         initial={{ opacity: 0 }}
       >
         <Container maxWidth='md' className={classes.root}>
-          <div onClick={() => router.back()}>
-            <BackButton />
-          </div>
           <Paper className={classes.paper}>
-            <CreatePost room={room} id={id} />
+            {openCreate && (
+              <CreatePost setOpenCreate={setOpenCreate} room={room} id={id} />
+            )}
           </Paper>
         </Container>
       </motion.div>

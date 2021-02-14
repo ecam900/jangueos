@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     justifyItems: 'center',
     position: 'relative',
+    paddingTop: '10vh',
   },
   groupsSection: {
     height: '100%',

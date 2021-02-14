@@ -16,7 +16,12 @@ const RoomsGrid = ({ rooms }) => {
   const router = useRouter();
 
   return (
-    <div className={classes.root}>
+    <motion.div
+      variants={listVariants}
+      initial='hidden'
+      animate='visible'
+      className={classes.root}
+    >
       <Grid container spacing={2}>
         {rooms &&
           rooms.map((room, i) => {
@@ -29,9 +34,16 @@ const RoomsGrid = ({ rooms }) => {
                 onClick={() => router.push(`${router.asPath}/${room.slug}`)}
               >
                 <motion.div
+                  key={i}
                   variants={listItemVariants}
-                  initial='hidden'
-                  animate='visible'
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  // initial='hidden'
+                  // animate='visible'
                 >
                   <RoomItem room={room} />
                 </motion.div>
@@ -44,7 +56,7 @@ const RoomsGrid = ({ rooms }) => {
           😕 No Hay Ningun Cuarto... toma una galleta 🍪.
         </Typography>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -82,7 +82,7 @@ const CreateGroup = () => {
   };
 
   return (
-    <Container align='center' maxWidth='lg'>
+    <Container align='center' maxWidth='lg' style={{ paddingTop: '10vh' }}>
       {/* <Paper> */}
       <Typography align='center' variant='h3'>
         Crea Un Grupo

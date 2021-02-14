@@ -23,6 +23,8 @@ const db = firebase.firestore();
 const useStyles = makeStyles((theme) => ({
   svgBGroot: {
     height: '100%',
+    paddingTop: '10vh',
+    width: '100%',
     background: `url('/dunebg.svg') no-repeat center center`,
     backgroundSize: 'cover',
   },
@@ -162,7 +164,7 @@ const GroupDetail = () => {
             <Typography
               style={{ paddingTop: '1rem' }}
               align='center'
-              // color='primary'
+              color='primary'
               variant='h3'
             >
               {groupInfo?.name}
