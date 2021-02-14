@@ -43,7 +43,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = yup.object().shape({
-  name: yup.string().min(6).max(30).required(),
+  name: yup
+    .string()
+    .min(6)
+    .max(30)
+    .matches(/^[a-zA-Z0-9-_]+$/)
+    .required(),
   description: yup.string().min(15).max(2000),
   shortDescription: yup.string().min(10).max(100),
 });
@@ -77,7 +82,7 @@ const CreateGroup = () => {
   };
 
   return (
-    <Container align='center' maxWidth='md'>
+    <Container align='center' maxWidth='lg' style={{ paddingTop: '10vh' }}>
       {/* <Paper> */}
       <Typography align='center' variant='h3'>
         Crea Un Grupo

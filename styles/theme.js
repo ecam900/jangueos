@@ -3,26 +3,27 @@ import { createMuiTheme } from '@material-ui/core/styles';
 // Create a theme instance.
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    // type: 'dark',
     primary: {
-      main: '#D2766D',
+      main: '#8AA39B',
     },
     secondary: {
-      main: '#BA554C',
+      main: '#8AA39B',
     },
   },
   typography: {
     fontFamily: "'Montserrat', sans-serif",
+
     h1: {
-      fontFamily: 'Lobster, cursive',
+      fontFamily: `'Pacifico', sans-serif`,
       fontWeight: '400',
     },
     h2: {
-      fontFamily: 'Lobster, cursive',
+      fontFamily: `'Rubik', sans-serif`,
       fontWeight: '400',
     },
     h3: {
-      fontFamily: 'Lobster, cursive',
+      fontFamily: `'Rubik', sans-serif`,
       fontWeight: '400',
     },
   },

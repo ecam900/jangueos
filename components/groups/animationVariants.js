@@ -5,6 +5,10 @@ export const listVariants = {
   visible: {
     opacity: 1,
     transition: {
+      ease: 'easeIn',
+      when: 'beforeChildren',
+      staggerChildren: 0.3,
+      delayChildren: 0.3,
       duration: 0.7,
     },
   },
@@ -22,7 +26,7 @@ export const listItemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5 },
+    transition: { type: 'spring' },
   },
   exit: {
     opacity: 0,

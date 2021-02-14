@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useRooms } from '../../../lib/useRooms';
+import useRooms from '../../../lib/useRooms';
 import { useAuth } from '../../../lib/auth';
 import { ChevronLeft } from '@material-ui/icons';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
@@ -105,7 +105,7 @@ const CreateRoom = () => {
             <TextField
               {...props}
               className={classes.inputs}
-              label='Nombre del Grupo'
+              label='Nombre del Cuarto'
               autoComplete='false'
               variant='outlined'
               fullWidth
@@ -122,7 +122,7 @@ const CreateRoom = () => {
             <TextField
               {...props}
               className={classes.inputs}
-              label='Descripcion de Canal 👋'
+              label='Descripcion del Cuarto 👋'
               autoComplete='false'
               variant='outlined'
               fullWidth

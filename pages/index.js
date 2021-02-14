@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import Head from 'next/head';
 import GroupJoinPane from '../components/GroupJoinPane';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../lib/auth';
 import Link from 'next/link';
 import layoutVariants from '../components/layout/layoutVariants';
@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import GroupList from '../components/home/GroupList';
 import useGroups from '../lib/useGroups';
 import { useEffect, useState } from 'react';
+import JoinGroupModal from '../components/JoinGroupModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     justifyItems: 'center',
+    position: 'relative',
+    paddingTop: '10vh',
   },
   groupsSection: {
     height: '100%',
@@ -43,17 +46,18 @@ export default function Home() {
   const auth = useAuth();
   const theme = useTheme();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   return (
     <div className={classes.root}>
       <div className={classes.groupsSection}>
         <Container align='center' maxWidth='md'>
-          <GroupList />
+          <GroupList open={open} setOpen={setOpen} />
         </Container>
       </div>
-      {/* <GroupJoinPane /> */}
-      {/* <GroupJoinPane />
-      <GroupJoinPane /> */}
+      <AnimatePresence exitBeforeEnter>
+        {open && <JoinGroupModal key='modal' open={open} setOpen={setOpen} />}
+      </AnimatePresence>
     </div>
   );
 }

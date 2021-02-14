@@ -21,7 +21,18 @@ import useRooms from '../../lib/useRooms';
 const db = firebase.firestore();
 
 const useStyles = makeStyles((theme) => ({
-  root: { height: '100%', paddingBottom: theme.spacing(2) },
+  svgBGroot: {
+    height: '100%',
+    paddingTop: '10vh',
+    width: '100%',
+    background: `url('/dunebg.svg') no-repeat 0 0 fixed`,
+    backgroundSize: 'cover',
+    // backgroundColor: 'red',
+  },
+  root: {
+    height: '100% ',
+    paddingBottom: theme.spacing(2),
+  },
   descriptionMarkdown: {
     padding: theme.spacing(2),
   },
@@ -39,7 +50,9 @@ const useStyles = makeStyles((theme) => ({
   },
   descriptionMarkdown: {
     // width: '80vw',
-    fontSize: '1reonm',
+    color: theme.palette.text.primary,
+    opacity: 0.85,
+    fontSize: '1rem',
   },
 }));
 
@@ -56,7 +69,6 @@ const GroupDetail = () => {
   const { id } = router.query;
 
   const { rooms, roomsLoading } = useRooms();
-
   useEffect(() => {
     console.log('Rooms is ==> ', rooms);
     console.log('Loading is ==>', roomsLoading);
@@ -82,7 +94,7 @@ const GroupDetail = () => {
       if (auth.userData && groupInfo?.members) {
         let members = groupInfo?.members ?? [];
 
-        if (!members.includes(auth.userData.email)) {
+        if (!members.includes(auth.user.uid)) {
           console.log('got false');
           setLoading(false);
           enqueueSnackbar(`Tu no tienes acceso a este grupo.`, {
@@ -138,82 +150,88 @@ const GroupDetail = () => {
 
   return (
     <>
-      {loading && (
-        <Typography variant='h3' color='primary' align='center'>
-          Fetching Group...
-        </Typography>
-      )}
-      {!loading && (
-        <Container className={classes.root} maxWidth='md'>
-          <Typography
-            style={{ paddingTop: '1rem' }}
-            align='center'
-            color='primary'
-            variant='h3'
-          >
-            {groupInfo?.name}
+      <motion.div
+        className={classes.svgBGroot}
+        // animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
+        // initial={{ opacity: 0 }}
+      >
+        {loading && (
+          <Typography variant='h3' color='primary' align='center'>
+            Fetching Group...
           </Typography>
-          <div onClick={() => router.back()} className={classes.backButton}>
-            <ChevronLeft />
-            <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
-          </div>
-
-          {rooms && <RoomsGrid rooms={rooms} />}
-          {isOwner() && (
-            <Container align='center'>
-              <Button
-                onClick={() =>
-                  router.push(`/groups/${groupInfo.slug}/create-room`)
-                }
-              >
-                Crear Cuarto
-              </Button>
-            </Container>
-          )}
-
-          <Paper elevation={4} className={classes.groupDescriptionSection}>
-            <Typography align='center' color='primary' variant='h3'>
-              Descripcion de Grupo
+        )}
+        {!loading && (
+          <Container className={classes.root} maxWidth='md'>
+            <Typography
+              style={{ paddingTop: '1rem' }}
+              align='center'
+              color='primary'
+              variant='h3'
+            >
+              {groupInfo?.name}
             </Typography>
+            <div onClick={() => router.back()} className={classes.backButton}>
+              <ChevronLeft />
+              <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
+            </div>
+
+            {rooms && <RoomsGrid rooms={rooms} />}
             {isOwner() && (
-              <Container align='right'>
+              <Container align='center'>
                 <Button
-                  onClick={() => setEditMode(!editMode)}
-                  color='primary'
-                  variant='outlined'
+                  onClick={() =>
+                    router.push(`/groups/${groupInfo.slug}/create-room`)
+                  }
                 >
-                  {editMode ? 'Volver' : 'Edit'}
+                  Crear Cuarto
                 </Button>
               </Container>
             )}
 
-            {!editMode ? (
-              <div
-                className={classes.descriptionMarkdown}
-                dangerouslySetInnerHTML={{
-                  __html: marked(groupInfo.description),
-                }}
-              ></div>
-            ) : (
-              <>
-                <TextField
-                  fullWidth
-                  variant='outlined'
-                  multiline
-                  value={editFieldValue}
-                  onChange={handleEditChange}
-                />
-
+            <Paper elevation={4} className={classes.groupDescriptionSection}>
+              <Typography align='center' color='primary' variant='h3'>
+                Descripcion de Grupo
+              </Typography>
+              {isOwner() && (
                 <Container align='right'>
-                  <Button onClick={handleSaveEdit} color='primary'>
-                    Guardar
+                  <Button
+                    onClick={() => setEditMode(!editMode)}
+                    color='primary'
+                    variant='outlined'
+                  >
+                    {editMode ? 'Volver' : 'Edit'}
                   </Button>
                 </Container>
-              </>
-            )}
-          </Paper>
-        </Container>
-      )}
+              )}
+
+              {!editMode ? (
+                <div
+                  className={classes.descriptionMarkdown}
+                  dangerouslySetInnerHTML={{
+                    __html: marked(groupInfo.description),
+                  }}
+                ></div>
+              ) : (
+                <>
+                  <TextField
+                    fullWidth
+                    variant='outlined'
+                    multiline
+                    value={editFieldValue}
+                    onChange={handleEditChange}
+                  />
+
+                  <Container align='right'>
+                    <Button onClick={handleSaveEdit} color='primary'>
+                      Guardar
+                    </Button>
+                  </Container>
+                </>
+              )}
+            </Paper>
+          </Container>
+        )}
+      </motion.div>
     </>
   );
 };
