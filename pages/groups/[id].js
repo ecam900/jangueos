@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../../lib/auth';
 import marked from 'marked';
 import firebase from '../../lib/firebase';
@@ -23,6 +23,7 @@ const db = firebase.firestore();
 const useStyles = makeStyles((theme) => ({
   svgBGroot: {
     height: '100%',
+    minHeight: '100vh',
     paddingTop: '10vh',
     width: '100%',
     background: `url('/dunebg.svg') no-repeat 0 0 fixed`,
@@ -152,85 +153,101 @@ const GroupDetail = () => {
     <>
       <motion.div
         className={classes.svgBGroot}
-        // animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
-        // initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
+        initial={{ opacity: 0 }}
       >
-        {loading && (
-          <Typography variant='h3' color='primary' align='center'>
-            Fetching Group...
-          </Typography>
-        )}
-        {!loading && (
-          <Container className={classes.root} maxWidth='md'>
-            <Typography
-              style={{ paddingTop: '1rem' }}
-              align='center'
-              color='primary'
-              variant='h3'
-            >
-              {groupInfo?.name}
-            </Typography>
-            <div onClick={() => router.back()} className={classes.backButton}>
-              <ChevronLeft />
-              <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
-            </div>
-
-            {rooms && <RoomsGrid rooms={rooms} />}
-            {isOwner() && (
-              <Container align='center'>
-                <Button
-                  onClick={() =>
-                    router.push(`/groups/${groupInfo.slug}/create-room`)
-                  }
-                >
-                  Crear Cuarto
-                </Button>
-              </Container>
-            )}
-
-            <Paper elevation={4} className={classes.groupDescriptionSection}>
-              <Typography align='center' color='primary' variant='h3'>
-                Descripcion de Grupo
+        <AnimatePresence exitBeforeEnter>
+          {loading && (
+            <motion.div exit={{ opacity: 0 }}>
+              <Typography variant='h3' color='primary' align='center'>
+                Fetching Group...
               </Typography>
-              {isOwner() && (
-                <Container align='right'>
-                  <Button
-                    onClick={() => setEditMode(!editMode)}
-                    color='primary'
-                    variant='outlined'
-                  >
-                    {editMode ? 'Volver' : 'Edit'}
-                  </Button>
-                </Container>
-              )}
-
-              {!editMode ? (
+            </motion.div>
+          )}
+          {!loading && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Container className={classes.root} maxWidth='md'>
+                <Typography
+                  style={{ paddingTop: '1rem' }}
+                  align='center'
+                  color='primary'
+                  variant='h3'
+                >
+                  {groupInfo?.name}
+                </Typography>
                 <div
-                  className={classes.descriptionMarkdown}
-                  dangerouslySetInnerHTML={{
-                    __html: marked(groupInfo.description),
-                  }}
-                ></div>
-              ) : (
-                <>
-                  <TextField
-                    fullWidth
-                    variant='outlined'
-                    multiline
-                    value={editFieldValue}
-                    onChange={handleEditChange}
-                  />
+                  onClick={() => router.back()}
+                  className={classes.backButton}
+                >
+                  <ChevronLeft />
+                  <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
+                </div>
 
-                  <Container align='right'>
-                    <Button onClick={handleSaveEdit} color='primary'>
-                      Guardar
+                {rooms && <RoomsGrid rooms={rooms} />}
+                {isOwner() && (
+                  <Container align='center'>
+                    <Button
+                      onClick={() =>
+                        router.push(`/groups/${groupInfo.slug}/create-room`)
+                      }
+                    >
+                      Crear Cuarto
                     </Button>
                   </Container>
-                </>
-              )}
-            </Paper>
-          </Container>
-        )}
+                )}
+
+                <Paper
+                  elevation={4}
+                  className={classes.groupDescriptionSection}
+                >
+                  <Typography align='center' color='primary' variant='h3'>
+                    Descripcion de Grupo
+                  </Typography>
+                  {isOwner() && (
+                    <Container align='right'>
+                      <Button
+                        onClick={() => setEditMode(!editMode)}
+                        color='primary'
+                        variant='outlined'
+                      >
+                        {editMode ? 'Volver' : 'Edit'}
+                      </Button>
+                    </Container>
+                  )}
+
+                  {!editMode ? (
+                    <div
+                      className={classes.descriptionMarkdown}
+                      dangerouslySetInnerHTML={{
+                        __html: marked(groupInfo.description),
+                      }}
+                    ></div>
+                  ) : (
+                    <>
+                      <TextField
+                        fullWidth
+                        variant='outlined'
+                        multiline
+                        value={editFieldValue}
+                        onChange={handleEditChange}
+                      />
+
+                      <Container align='right'>
+                        <Button onClick={handleSaveEdit} color='primary'>
+                          Guardar
+                        </Button>
+                      </Container>
+                    </>
+                  )}
+                </Paper>
+              </Container>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </>
   );
