@@ -112,7 +112,7 @@ const Layout = ({ children }) => {
   // Check for hiding the nav bar if user scrolls down, after threshold distance.
   useEffect(() => {
     function checkPosition() {
-      if (scrollPosition <= 150) {
+      if (scrollPosition <= 200) {
         controls.start('visible');
         return;
       }

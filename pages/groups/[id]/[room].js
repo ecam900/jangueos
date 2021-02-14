@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       minHeight: '100vh',
     },
+    paddingTop: '10vh',
   },
   root: {
     height: '100% ',
@@ -44,7 +45,7 @@ const RoomDetail = () => {
   const classes = useStyles();
   const router = useRouter();
   const auth = useAuth();
-  const [openCreate, setOpenCreate] = useState(false);
+  const [openCreate, setOpenCreate] = useState(true);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const { room, id } = router.query;
