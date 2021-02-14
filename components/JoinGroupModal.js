@@ -14,6 +14,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useState } from 'react';
+import useGroups from '../lib/useGroups';
 
 const modalVariants = {
   hidden: {
@@ -70,7 +71,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = yup.object().shape({
-  groupID: yup.string().matches('/^[a-zA-Z0-9-_]+$/').required(),
+  groupID: yup
+    .string()
+    .matches(/^[a-zA-Z0-9-_]+$/)
+    .required(),
   pin: yup.string().required(),
 });
 
@@ -89,13 +93,19 @@ const JoinGroupModal = ({ open, setOpen }) => {
     resolver: yupResolver(schema),
   });
 
+  // UseGroups hook
+  const { joinGroup } = useGroups();
+
   const handleClickBack = () => {
     console.log('baaack!');
     setOpen(false);
   };
 
-  const onSubmit = (values) => {
-    console.log('SUBMIT CLICKED', values);
+  const onSubmit = async (values) => {
+    const response = await joinGroup(values);
+    if (response === true) {
+      console.log('JOINED GROUP!');
+    }
   };
 
   return (
@@ -121,7 +131,7 @@ const JoinGroupModal = ({ open, setOpen }) => {
                 // className={classes.inputs}
                 control={control}
                 defaultValue=''
-                name='GroupID'
+                name='groupID'
                 render={(props) => (
                   <TextField
                     {...props}

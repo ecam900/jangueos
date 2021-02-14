@@ -1,12 +1,14 @@
 export const listVariants = {
   hidden: {
-    opacitiy: 0,
+    opacity: 0,
   },
   visible: {
     opacity: 1,
     transition: {
-      // ease: 'easeIn',
-      // when: 'beforeChildren',
+      ease: 'easeIn',
+      when: 'beforeChildren',
+      staggerChildren: 0.1,
+      delayChildren: 1,
       duration: 0.7,
     },
   },
@@ -18,7 +20,7 @@ export const listVariants = {
 
 export const listItemVariants = {
   hidden: {
-    opacitiy: 0,
+    opacity: 0,
     y: 100,
   },
   visible: {

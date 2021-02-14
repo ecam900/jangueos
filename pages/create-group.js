@@ -43,7 +43,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = yup.object().shape({
-  name: yup.string().min(6).max(30).matches('/^[a-zA-Z0-9-_]+$/').required(),
+  name: yup
+    .string()
+    .min(6)
+    .max(30)
+    .matches(/^[a-zA-Z0-9-_]+$/)
+    .required(),
   description: yup.string().min(15).max(2000),
   shortDescription: yup.string().min(10).max(100),
 });

@@ -105,7 +105,7 @@ const CreateRoom = () => {
             <TextField
               {...props}
               className={classes.inputs}
-              label='Nombre del Grupo'
+              label='Nombre del Cuarto'
               autoComplete='false'
               variant='outlined'
               fullWidth
@@ -122,7 +122,7 @@ const CreateRoom = () => {
             <TextField
               {...props}
               className={classes.inputs}
-              label='Descripcion de Canal 👋'
+              label='Descripcion del Cuarto 👋'
               autoComplete='false'
               variant='outlined'
               fullWidth

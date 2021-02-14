@@ -13,19 +13,17 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: "'Montserrat', sans-serif",
+
     h1: {
       fontFamily: `'Pacifico', sans-serif`,
-
       fontWeight: '400',
     },
     h2: {
-      fontFamily: `'Pacifico', sans-serif`,
-
+      fontFamily: `'Rubik', sans-serif`,
       fontWeight: '400',
     },
     h3: {
-      fontFamily: `'Goldman', sans-serif`,
-
+      fontFamily: `'Rubik', sans-serif`,
       fontWeight: '400',
     },
   },

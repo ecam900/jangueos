@@ -10,6 +10,7 @@ export default class MyDocument extends Document {
         <Head>
           {/* PWA primary color */}
           <meta name='theme-color' content={theme.palette.primary.main} />
+          <link rel='preconnect' href='https://fonts.gstatic.com'></link>
           <link
             rel='stylesheet'
             href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
@@ -25,17 +26,12 @@ export default class MyDocument extends Document {
 
           {/* TEST FONTS */}
           <link
+            href='https://fonts.googleapis.com/css2?family=Rubik&display=swap'
+            rel='stylesheet'
+          />
+
+          <link
             href='https://fonts.googleapis.com/css2?family=Pacifico&display=swap'
-            rel='stylesheet'
-          />
-
-          <link
-            href='https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap'
-            rel='stylesheet'
-          />
-
-          <link
-            href='https://fonts.googleapis.com/css2?family=Goldman&display=swap'
             rel='stylesheet'
           />
         </Head>

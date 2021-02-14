@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
   },
   root: {
-    height: '100%',
+    height: '100% ',
     paddingBottom: theme.spacing(2),
   },
   descriptionMarkdown: {
@@ -147,7 +147,11 @@ const GroupDetail = () => {
 
   return (
     <>
-      <div className={classes.svgBGroot}>
+      <motion.div
+        className={classes.svgBGroot}
+        animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
+        initial={{ opacity: 0 }}
+      >
         {loading && (
           <Typography variant='h3' color='primary' align='center'>
             Fetching Group...
@@ -224,7 +228,7 @@ const GroupDetail = () => {
             </Paper>
           </Container>
         )}
-      </div>
+      </motion.div>
     </>
   );
 };

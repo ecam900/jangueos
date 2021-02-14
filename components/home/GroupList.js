@@ -2,7 +2,7 @@ import { Container, Paper, Typography, Button } from '@material-ui/core';
 import { Router } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import GroupItem from './GroupItem';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { listVariants, listItemVariants } from './animationVariants';
 import useGroups from '../../lib/useGroups';
@@ -22,11 +22,7 @@ const GroupList = ({ open, setOpen }) => {
   return (
     <div>
       <Container maxWidth='md'>
-        <Typography
-          style={{ paddingBottom: '2rem' }}
-          variant='h2'
-          color='primary'
-        >
+        <Typography style={{ paddingBottom: '2rem' }} variant='h4'>
           Membresias
         </Typography>
 
@@ -36,33 +32,40 @@ const GroupList = ({ open, setOpen }) => {
             <Button component='a'>CREAR GRUPO</Button>
           </Link>
         )}
-        <motion.div
-          key={'group-key'}
-          initial='hidden'
-          animate='visible'
-          variants={listVariants}
-          exit='exit'
-        >
-          {userGroups.map((group, i) => (
+        <AnimatePresence exitBeforeEnter>
+          {userGroups.length > 0 && (
             <motion.div
+              key={'group-key'}
               initial='hidden'
               animate='visible'
+              variants={listVariants}
               exit='exit'
-              key={i}
-              variants={listItemVariants}
             >
-              <GroupItem
-                groupname={group.name}
-                description={group.shortDescription}
-                author={group.authorDisplay}
-                slug={group.slug}
-              />
+              {userGroups.map((group, i) => (
+                <motion.div
+                  initial='hidden'
+                  animate='visible'
+                  exit='exit'
+                  key={i}
+                  variants={listItemVariants}
+                >
+                  <GroupItem
+                    groupname={group.name}
+                    description={group.shortDescription}
+                    author={group.authorDisplay}
+                    slug={group.slug}
+                  />
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
-        {userGroups.length < 1 && (
-          <Typography>No eres miembro de ningun grupo 🙃</Typography>
-        )}
+          )}
+
+          {userGroups.length < 1 && (
+            <motion.div exit={{ opacity: 0 }}>
+              <Typography>No eres miembro de ningun grupo 🙃</Typography>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Container>
     </div>
   );
