@@ -86,7 +86,7 @@ const CreateRoom = () => {
   };
 
   return (
-    <Container align='center' maxWidth='md'>
+    <Container style={{ paddingTop: '15vh' }} align='center' maxWidth='md'>
       {/* <Paper> */}
       <Typography align='center' variant='h3'>
         Crea Un Cuarto

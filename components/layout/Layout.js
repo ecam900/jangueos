@@ -29,23 +29,28 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     // height: '100vh',
     minHeight: '100vh',
+    width: '100%',
     overflowX: 'hidden',
     position: 'relative',
   },
   topNavContainer: {
     position: 'fixed',
     top: '0',
+    left: '0',
     width: '100%',
     zIndex: 1,
   },
   topNav: {
-    paddingTop: theme.spacing(1),
+    padding: theme.spacing(1),
     minHeight: '5vh',
     color: theme.palette.primary.main,
-    // backgroundColor: theme.palette.background.default,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    // [theme.breakpoints.up('md')]: {
+    //   paddingLeft: theme.spacing(6),
+    //   paddingRight: theme.spacing(6),
+    // },
   },
 
   childrenWrapper: {
@@ -85,8 +90,11 @@ const Layout = ({ children }) => {
 
   //Navbar Scroll Tracking for Hiding it on Scroll Up
   const { scrollY } = useViewportScroll();
+
+  // True is down.
+  const [scrollDirection, setScrollDirection] = useState(true);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [lastPosition, setLastPosition] = useState(0);
+  const [beyondThreshold, setBeyondThreshold] = useState(false);
 
   // Menu Modal State
   const [open, setOpen] = useState(false);
@@ -94,14 +102,22 @@ const Layout = ({ children }) => {
   const { signOut } = auth;
 
   useEffect(() => {
-    function updateScroll() {
-      // if (scrollY.get() < scrollPosition) {
-      //   controls.start('hidden');
-      // }
+    async function updateScroll() {
+      const scrollVelocity = scrollY.getVelocity();
+      const scrollPosition = scrollY.get();
 
-      // console.log('Position: ', scrollY.get());
+      if (scrollVelocity > 0) {
+        // console.log('positive. scrolling DOWN.');
+        setScrollDirection(true);
+      }
 
-      setScrollPosition(() => scrollY.get());
+      if (scrollVelocity < 0) {
+        // console.log('negative. scrolling UP.');
+        setScrollDirection(false);
+      }
+
+      setScrollPosition(scrollPosition);
+      // console.log('Scroll position is ==> ', scrollPosition);
     }
 
     const unsubscribeScrollY = scrollY.onChange(updateScroll);
@@ -109,59 +125,62 @@ const Layout = ({ children }) => {
     return () => unsubscribeScrollY();
   }, []);
 
-  // Check for hiding the nav bar if user scrolls down, after threshold distance.
   useEffect(() => {
-    function checkPosition() {
-      if (scrollPosition <= 200) {
-        controls.start('visible');
-        return;
-      }
-
-      if (lastPosition < scrollPosition) {
-        console.log('last position is lesser. you are scrolling down.');
-        controls.start('hidden');
-      }
-
-      if (lastPosition > scrollPosition) {
-        console.log('last position is greater. you are scrolling up.');
-        if (lastPosition - scrollPosition > 20) {
-          controls.start('visible');
-        }
-      }
+    if (beyondThreshold && scrollDirection) {
+      // console.log('Scrolling down beyond threshhold!');
+      controls.start('hidden');
     }
 
-    checkPosition();
-    setLastPosition(scrollPosition);
-  }, [scrollPosition]);
+    if (!beyondThreshold || !scrollDirection) {
+      // console.log('Scrolling up!');
+      controls.start('visible');
+    }
+  }, [scrollDirection, beyondThreshold]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (scrollPosition > 200) {
+        setBeyondThreshold(true);
+      }
+      if (scrollPosition < 200) {
+        setBeyondThreshold(false);
+      }
+    }, 100);
+
+    return () => clearTimeout(handler);
+  }),
+    [scrollPosition];
 
   return (
     <div className={classes.root}>
-      <motion.div animate={controls} variants={navbarVariants}>
-        <Container className={classes.topNavContainer} maxWidth='lg'>
-          <div className={classes.topNav}>
-            <div className={classes.logo}>
-              <Link href='/'>
-                <Typography variant='h1' style={{ fontSize: '2rem' }}>
-                  dimelo
-                </Typography>
-              </Link>
-            </div>
-            {/* {auth.user && !isMobile && (
+      <motion.div
+        className={classes.topNavContainer}
+        animate={controls}
+        variants={navbarVariants}
+      >
+        <Container maxWidth={'lg'} className={classes.topNav}>
+          <div className={classes.logo}>
+            <Link href='/'>
+              <Typography variant='h1' style={{ fontSize: '2rem' }}>
+                dimelo
+              </Typography>
+            </Link>
+          </div>
+          {/* {auth.user && !isMobile && (
             <Button onClick={() => signOut()} size='small' color='primary'>
               LOG OUT
             </Button>
           )} */}
 
-            {auth.user && (
-              <motion.div
-                whileTap={{ scale: 0.8 }}
-                onClick={() => setOpen(!open)}
-                className={classes.hamburger}
-              >
-                <HamburgerMenu />
-              </motion.div>
-            )}
-          </div>
+          {auth.user && (
+            <motion.div
+              whileTap={{ scale: 0.8 }}
+              onClick={() => setOpen(!open)}
+              className={classes.hamburger}
+            >
+              <HamburgerMenu />
+            </motion.div>
+          )}
         </Container>
       </motion.div>
 

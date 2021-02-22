@@ -39,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
   groupDescriptionSection: {
     padding: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(6),
+    },
     marginTop: theme.spacing(6),
   },
   backButton: {
@@ -172,9 +175,13 @@ const GroupDetail = () => {
             >
               <Container className={classes.root} maxWidth='md'>
                 <Typography
-                  style={{ paddingTop: '1rem' }}
+                  style={{
+                    paddingTop: '1rem',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    opacity: 0.8,
+                  }}
                   align='center'
-                  color='primary'
                   variant='h3'
                 >
                   {groupInfo?.name}
@@ -204,7 +211,7 @@ const GroupDetail = () => {
                   elevation={4}
                   className={classes.groupDescriptionSection}
                 >
-                  <Typography align='center' color='primary' variant='h3'>
+                  <Typography align='center' variant='h3'>
                     Descripcion de Grupo
                   </Typography>
                   {isOwner() && (
