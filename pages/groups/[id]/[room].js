@@ -9,12 +9,20 @@ import {
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../../../lib/auth';
 import firebase from '../../../lib/firebase';
 import BackButton from '../../../components/BackButton';
 import Link from 'next/link';
 import CreatePost from '../../../components/rooms/CreatePost';
+import usePosts from '../../../lib/usePosts';
+import {
+  AddBox,
+  AddBoxOutlined,
+  AddBoxRounded,
+  AddBoxTwoTone,
+  PostAddOutlined,
+} from '@material-ui/icons';
 
 const db = firebase.firestore();
 
@@ -32,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: '100% ',
     paddingBottom: theme.spacing(2),
+    // backgroundColor: 'coral',
+    display: 'flex',
+    flexDirection: 'column',
   },
 
   paper: {
@@ -47,12 +58,11 @@ const RoomDetail = () => {
   const auth = useAuth();
   const [openCreate, setOpenCreate] = useState(true);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(true);
 
   const { room, id } = router.query;
 
-  useEffect(() => {
-    console.log(router.query);
-  }, []);
+  const { posts, postsLoading, createPost } = usePosts();
 
   return (
     <>
@@ -62,14 +72,38 @@ const RoomDetail = () => {
         initial={{ opacity: 0 }}
       >
         <Container maxWidth='md' className={classes.root}>
-          <Paper className={classes.paper}>
+          {/* GROUP JOIN MODAL */}
+          <AnimatePresence exitBeforeEnter>
             {openCreate && (
-              <CreatePost setOpenCreate={setOpenCreate} room={room} id={id} />
+              <CreatePost
+                createPost={createPost}
+                loading={postsLoading}
+                setOpenCreate={setOpenCreate}
+                room={room}
+                id={id}
+              />
             )}
-          </Paper>
+          </AnimatePresence>
         </Container>
+        <NewPostButton setOpenCreate={setOpenCreate} />
       </motion.div>
     </>
+  );
+};
+
+const NewPostButton = ({ setOpenCreate }) => {
+  return (
+    <motion.div
+      initial={{ x: 500 }}
+      animate={{ x: 0 }}
+      exit={{ x: 500 }}
+      style={{ position: 'fixed', zIndex: 2, bottom: '10%', right: '5%' }}
+    >
+      <Button onClick={() => setOpenCreate(true)}>
+        <PostAddOutlined style={{ marginRight: '.25rem' }} />
+        POST
+      </Button>
+    </motion.div>
   );
 };
 
