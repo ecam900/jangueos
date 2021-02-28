@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    // height: '100vh',
     minHeight: '100vh',
     width: '100%',
     overflowX: 'hidden',

@@ -15,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useState } from 'react';
 import useGroups from '../lib/useGroups';
+import { useSnackbar } from 'notistack';
 
 const modalVariants = {
   hidden: {
@@ -36,12 +37,14 @@ const modalVariants = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'absolute',
+    position: 'fixed',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
     height: '100%',
     width: '100%',
+    top: '10%',
     // zIndex: '1',
     borderRadius: '8px',
     '& .MuiContainer-root': {
@@ -49,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
     '& .MuiPaper-root': {
-      height: '100%',
+      height: 'auto',
       width: '100%',
     },
     '& .MuiTypography-h3': {
@@ -81,6 +84,7 @@ const schema = yup.object().shape({
 const JoinGroupModal = ({ open, setOpen }) => {
   const classes = useStyles();
   const router = useRouter();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   // Form State
   const [values, setvalues] = useState({
@@ -102,9 +106,25 @@ const JoinGroupModal = ({ open, setOpen }) => {
   };
 
   const onSubmit = async (values) => {
+    console.log('clicked with values: ', JSON.stringify(values));
     const response = await joinGroup(values);
     if (response === true) {
       console.log('JOINED GROUP!');
+      enqueueSnackbar(
+        `Todo se ve bien. Entrada autorizada! 👍 Refrescando pagina.`,
+        {
+          variant: 'default',
+        }
+      );
+
+      setTimeout(() => {
+        router.reload();
+      }, 1000);
+    } else {
+      enqueueSnackbar(`Hay algo mal...😞 Verifica esa info!`, {
+        variant: 'error',
+      });
+      console.log('ERROR JOINING GROUP');
     }
   };
 
@@ -168,18 +188,9 @@ const JoinGroupModal = ({ open, setOpen }) => {
               <Typography className={classes.error} variant='body2'>
                 {errors.pin?.message}
               </Typography>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  width: '100%',
-                  justifyContent: 'center',
-                }}
-              >
-                <Button align='center' type='submit'>
-                  ENTRAR
-                </Button>
-              </div>
+              <Button align='center' type='submit'>
+                ENTRAR
+              </Button>
             </form>
           </Paper>
         </Container>

@@ -48,7 +48,7 @@ const RoomItem = ({ room }) => {
     <motion.div whileTap={{ scale: 0.95 }} className={classes.root}>
       <Paper elevation={5} className={classes.paper}>
         <div className={classes.itemHeader}>
-          <Typography align={isMobile ? 'center' : 'left'} variant='h5'>
+          <Typography noWrap align={isMobile ? 'center' : 'left'} variant='h5'>
             {room.name}
           </Typography>
           <DeviceHubIcon color='primary' />
