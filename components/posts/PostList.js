@@ -1,5 +1,6 @@
 import { Container, makeStyles, Typography } from '@material-ui/core';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PostList = ({ posts }) => {
+  const router = useRouter();
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -25,6 +27,7 @@ const PostList = ({ posts }) => {
               initial={{ x: -1000 }}
               animate={{ x: 0 }}
               className={classes.postItem}
+              onClick={() => router.push(`${router.asPath}/${post?.postID}`)}
             >
               <Container maxWidth='md'>
                 <Typography>{post.title}</Typography>

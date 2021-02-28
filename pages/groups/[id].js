@@ -329,12 +329,13 @@ const GroupAccessCodeModal = ({ isOpen, setIsOpen, accessCode, groupID }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              <Typography variant='h5' align='center'>
+              <Typography color='primary' variant='h5' align='center'>
                 INFORMACION DE ACCESO
               </Typography>
-              <Typography style={{ paddingTop: '1rem' }}>
+              <Typography align='center' style={{ paddingTop: '1rem' }}>
                 Con esta informacion alguien se puede unir al grupo. Falicito.
                 Facilito? Ok.😄
               </Typography>
