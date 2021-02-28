@@ -325,7 +325,7 @@ const GroupAccessCodeModal = ({ isOpen, setIsOpen, accessCode, groupID }) => {
             <Paper
               style={{
                 paddingTop: '1rem',
-                minHeight: '40vh',
+                // minHeight: '40vh',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',

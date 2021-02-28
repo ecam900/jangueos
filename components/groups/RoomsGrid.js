@@ -30,7 +30,7 @@ const RoomsGrid = ({ rooms }) => {
                 item
                 key={i}
                 xs={12}
-                sm={4}
+                sm={6}
                 onClick={() => router.push(`${router.asPath}/${room.slug}`)}
               >
                 <motion.div

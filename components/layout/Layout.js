@@ -46,10 +46,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    // [theme.breakpoints.up('md')]: {
-    //   paddingLeft: theme.spacing(6),
-    //   paddingRight: theme.spacing(6),
-    // },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.spacing(6),
+      paddingRight: theme.spacing(6),
+    },
   },
 
   childrenWrapper: {
