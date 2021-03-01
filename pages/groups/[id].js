@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     paddingTop: '10vh',
     width: '100%',
-    background: `url('/dunebg.svg') no-repeat 0 0 fixed`,
+    // background: `url('/dunebg.svg') no-repeat 0 0 fixed`,
     backgroundSize: 'cover',
     // backgroundColor: 'red',
   },

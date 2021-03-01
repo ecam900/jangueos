@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   svgBGroot: {
     height: '100%',
     minHeight: '300vh',
-    background: `url('/dunebg.svg') no-repeat center center`,
+    // background: `url('/dunebg.svg') no-repeat center center`,
     backgroundSize: 'cover',
     [theme.breakpoints.down('sm')]: {
       minHeight: '100vh',
