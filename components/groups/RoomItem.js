@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
       opacity: 0.8,
     },
     '& .MuiTypography-body1': {
-      paddingLeft: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
+      padding: theme.spacing(2),
+      paddingTop: 'none',
     },
     borderRadius: '15px',
   },

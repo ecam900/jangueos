@@ -9,15 +9,12 @@ import useGroups from '../../lib/useGroups';
 import { useAuth } from '../../lib/auth';
 import firebase from '../../lib/firebase';
 
-const db = firebase.firestore();
-
 const GroupList = ({ open, setOpen }) => {
   const auth = useAuth();
   const groups = useGroups();
   // State
 
   const { userGroups } = groups;
-  // Effects
 
   return (
     <div>

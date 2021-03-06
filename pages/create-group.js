@@ -46,6 +46,7 @@ const schema = yup.object().shape({
   name: yup.string().min(6).max(30).required(),
   description: yup.string().min(15).max(2000),
   shortDescription: yup.string().min(10).max(100),
+  groupCode: yup.string().min(4).max(20).required(),
 });
 
 const CreateGroup = () => {
@@ -62,6 +63,7 @@ const CreateGroup = () => {
     name: '',
     description: '',
     shortDescription: '',
+    groupCode: '',
   });
   const { handleSubmit, control, errors } = useForm({
     resolver: yupResolver(schema),
@@ -139,11 +141,31 @@ const CreateGroup = () => {
             />
           )}
         />
+        <Controller
+          className={classes.inputs}
+          control={control}
+          defaultValue=''
+          name='groupCode'
+          render={(props) => (
+            <TextField
+              {...props}
+              className={classes.inputs}
+              label='Codigo de Acceso 🔑'
+              autoComplete='false'
+              variant='outlined'
+              fullWidth
+              type='text'
+            />
+          )}
+        />
         <Typography className={classes.error} variant='body2'>
           {errors.name?.message}
         </Typography>
         <Typography className={classes.error} variant='body2'>
           {errors.description?.message}
+        </Typography>
+        <Typography className={classes.error} variant='body2'>
+          {errors.groupCode?.message}
         </Typography>
         <Button disabled={loading} type='submit'>
           CREAR

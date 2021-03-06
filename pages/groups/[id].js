@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     paddingTop: '10vh',
     width: '100%',
-    background: `url('/dunebg.svg') no-repeat 0 0 fixed`,
+    // background: `url('/dunebg.svg') no-repeat 0 0 fixed`,
     backgroundSize: 'cover',
     // backgroundColor: 'red',
   },
@@ -70,12 +70,15 @@ const GroupDetail = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true);
 
+  //State for Access Code Modal
+  const [isOpen, setIsOpen] = useState(false);
+
   const { id } = router.query;
 
   const { rooms, roomsLoading } = useRooms();
   useEffect(() => {
-    console.log('Rooms is ==> ', rooms);
-    console.log('Loading is ==>', roomsLoading);
+    // console.log('Rooms is ==> ', rooms);
+    // console.log('Loading is ==>', roomsLoading);
   }, [roomsLoading]);
 
   useEffect(() => {
@@ -216,13 +219,28 @@ const GroupDetail = () => {
                   </Typography>
                   {isOwner() && (
                     <Container align='right'>
-                      <Button
-                        onClick={() => setEditMode(!editMode)}
-                        color='primary'
-                        variant='outlined'
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
                       >
-                        {editMode ? 'Volver' : 'Edit'}
-                      </Button>
+                        <Button
+                          onClick={() => setIsOpen(!isOpen)}
+                          color='primary'
+                          variant='outlined'
+                          size='small'
+                        >
+                          ACCESS CODE
+                        </Button>
+                        <Button
+                          onClick={() => setEditMode(!editMode)}
+                          color='primary'
+                          variant='outlined'
+                        >
+                          {editMode ? 'VOLVER' : 'EDITAR'}
+                        </Button>
+                      </div>
                     </Container>
                   )}
 
@@ -255,7 +273,93 @@ const GroupDetail = () => {
             </motion.div>
           )}
         </AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
+          {groupInfo && (
+            <GroupAccessCodeModal
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              accessCode={groupInfo?.groupCode}
+              groupID={groupInfo?.slug}
+              key={'groupAccessModal'}
+            />
+          )}
+        </AnimatePresence>
       </motion.div>
+    </>
+  );
+};
+
+const GroupAccessCodeModal = ({ isOpen, setIsOpen, accessCode, groupID }) => {
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', close);
+
+    return () => window.removeEventListener('keydown', close);
+  }, []);
+  return (
+    <>
+      {isOpen && (
+        <motion.div
+          style={{
+            position: 'fixed',
+            left: '0%',
+            top: '0%',
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: `rgba(46, 49, 49, .5)`,
+          }}
+          initial={{ x: -500, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 500, opacity: 0 }}
+        >
+          <Container maxWidth='md'>
+            <Paper
+              style={{
+                paddingTop: '1rem',
+                // minHeight: '40vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography color='primary' variant='h5' align='center'>
+                INFORMACION DE ACCESO
+              </Typography>
+              <Typography align='center' style={{ paddingTop: '1rem' }}>
+                Con esta informacion alguien se puede unir al grupo. Falicito.
+                Facilito? Ok.😄
+              </Typography>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingTop: '1rem',
+                }}
+              >
+                <Typography>
+                  <span style={{ fontWeight: 'bold' }}>GROUP ID</span>:{' '}
+                  {groupID}
+                </Typography>
+                <Typography>
+                  <span style={{ fontWeight: 'bold' }}>ACCESS CODE:</span>{' '}
+                  {accessCode}
+                </Typography>
+                <Button onClick={() => setIsOpen(false)}>OK DALE</Button>
+              </div>
+            </Paper>
+          </Container>
+        </motion.div>
+      )}
     </>
   );
 };
