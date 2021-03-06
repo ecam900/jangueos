@@ -24,7 +24,7 @@ const GroupList = ({ open, setOpen }) => {
         </Typography>
 
         <Button onClick={() => setOpen(!open)}>UNETE A UN GRUPO</Button>
-        {auth.userData.role.admin && (
+        {auth?.userData?.role?.admin && (
           <Link href='/create-group' passHref>
             <Button component='a'>CREAR GRUPO</Button>
           </Link>

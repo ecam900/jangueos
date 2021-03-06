@@ -31,8 +31,7 @@ const db = firebase.firestore();
 const useStyles = makeStyles((theme) => ({
   svgBGroot: {
     height: '100%',
-    minHeight: '300vh',
-    // background: `url('/dunebg.svg') no-repeat center center`,
+    minHeight: '110vh',
     backgroundSize: 'cover',
     [theme.breakpoints.down('sm')]: {
       minHeight: '100vh',
@@ -42,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: '100% ',
     paddingBottom: theme.spacing(2),
-    // backgroundColor: 'coral',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -109,7 +107,10 @@ const RoomDetail = () => {
               />
             )}
           </AnimatePresence>
-          <div onClick={() => router.back()} className={classes.backButton}>
+          <div
+            onClick={() => router.back()}
+            className={classes.backButton}
+          >
             <ChevronLeft />
             <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
           </div>
@@ -121,7 +122,11 @@ const RoomDetail = () => {
             {roomInfo?.description}
           </Typography>
 
-          <PostList posts={posts} />
+          <AnimatePresence>
+            {posts.length > 0 && !postsLoading && (
+              <PostList posts={posts} />
+            )}
+          </AnimatePresence>
         </Container>
         <NewPostButton setOpenCreate={setOpenCreate} />
       </motion.div>
