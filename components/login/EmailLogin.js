@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  makeStyles,
-  Typography,
-  Paper,
-  TextField,
-  Button,
-} from '@material-ui/core';
+import { makeStyles, Typography, Paper, TextField, Button } from '@material-ui/core';
 import { useAuth } from '../../lib/auth';
 import clsx from 'clsx';
 import { useForm, Controller } from 'react-hook-form';
@@ -80,23 +74,18 @@ const EmailLogin = ({ auth, usePassword, setUsePassword }) => {
   }, [auth.user]);
 
   const onSubmit = (values) => {
+    const email = values.email.trim().toLowerCase();
     if (!emailSent) {
       auth.emailLinkAuth(values.email).then((res) => {
         if (res) {
-          console.log('res is true');
-          enqueueSnackbar(
-            `Por ahi se fue! Verifica el Inbox de: ${values.email}`,
-            {
-              variant: 'success',
-            }
-          );
+          console.log('res is => ', res);
+          enqueueSnackbar(`Por ahi se fue! Verifica el Inbox de: ${values.email}`, {
+            variant: 'success',
+          });
           setEmailSent(true);
         }
       });
     } else {
-      enqueueSnackbar(`No no no asi no se puede...`, {
-        variant: 'warning',
-      });
       enqueueSnackbar(
         `Ya te enviamos un email - verifica el inbox y si no dale refresh a esta pagina.`,
         {
@@ -112,8 +101,8 @@ const EmailLogin = ({ auth, usePassword, setUsePassword }) => {
         Magic Link Signin
       </Typography>
       <Typography className={classes.subtitle}>
-        Crea tu cuenta si no tienes una, pero tambien puedes login de esta
-        manera si ya tienes cuenta. A fuego 🔥.
+        Crea tu cuenta si no tienes una, pero tambien puedes login de esta manera si ya
+        tienes cuenta. A fuego 🔥.
       </Typography>
 
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -144,8 +133,7 @@ const EmailLogin = ({ auth, usePassword, setUsePassword }) => {
           align='center'
           className={classes.prefPassword}
         >
-          😅 cul - pero{' '}
-          <span style={{ fontWeight: 'bold' }}>prefiero password </span>🙃🙈
+          😅 cul - pero <span style={{ fontWeight: 'bold' }}>prefiero password </span>🙃🙈
         </Typography>
       </form>
     </Paper>
