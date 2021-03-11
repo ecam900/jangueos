@@ -107,25 +107,16 @@ const RoomDetail = () => {
               />
             )}
           </AnimatePresence>
-          <div
-            onClick={() => router.back()}
-            className={classes.backButton}
-          >
+          <div onClick={() => router.back()} className={classes.backButton}>
             <ChevronLeft />
             <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
           </div>
-          <Typography
-            variant='h4'
-            color='primary'
-            style={{ paddingBottom: '2rem' }}
-          >
+          <Typography variant='h4' color='primary' style={{ paddingBottom: '2rem' }}>
             {roomInfo?.description}
           </Typography>
 
           <AnimatePresence>
-            {posts.length > 0 && !postsLoading && (
-              <PostList posts={posts} />
-            )}
+            {posts.length > 0 && !postsLoading && <PostList posts={posts} />}
           </AnimatePresence>
         </Container>
         <NewPostButton setOpenCreate={setOpenCreate} />

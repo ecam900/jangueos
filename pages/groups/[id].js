@@ -5,6 +5,8 @@ import {
   Paper,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
@@ -69,6 +71,10 @@ const GroupDetail = () => {
   const [groupInfo, setGroupInfo] = useState(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true);
+
+  // Media Queries and Theme
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   //State for Access Code Modal
   const [isOpen, setIsOpen] = useState(false);
@@ -180,7 +186,7 @@ const GroupDetail = () => {
                 <Typography
                   style={{
                     paddingTop: '1rem',
-                    color: 'white',
+                    // color: 'white',
                     fontWeight: 'bold',
                     opacity: 0.8,
                   }}
@@ -189,10 +195,7 @@ const GroupDetail = () => {
                 >
                   {groupInfo?.name}
                 </Typography>
-                <div
-                  onClick={() => router.back()}
-                  className={classes.backButton}
-                >
+                <div onClick={() => router.back()} className={classes.backButton}>
                   <ChevronLeft />
                   <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
                 </div>
@@ -201,38 +204,33 @@ const GroupDetail = () => {
                 {isOwner() && (
                   <Container align='center'>
                     <Button
-                      onClick={() =>
-                        router.push(`/groups/${groupInfo.slug}/create-room`)
-                      }
+                      onClick={() => router.push(`/groups/${groupInfo.slug}/create-room`)}
                     >
                       Crear Cuarto
                     </Button>
                   </Container>
                 )}
 
-                <Paper
-                  elevation={4}
-                  className={classes.groupDescriptionSection}
-                >
+                <Paper elevation={4} className={classes.groupDescriptionSection}>
                   <Typography align='center' variant='h3'>
                     Descripcion de Grupo
                   </Typography>
-                  {isOwner() && (
-                    <Container align='right'>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                        }}
+                  <Container align='right'>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: isOwner() ? 'space-between' : 'center',
+                      }}
+                    >
+                      <Button
+                        onClick={() => setIsOpen(!isOpen)}
+                        color='primary'
+                        variant='outlined'
+                        size='small'
                       >
-                        <Button
-                          onClick={() => setIsOpen(!isOpen)}
-                          color='primary'
-                          variant='outlined'
-                          size='small'
-                        >
-                          ACCESS CODE
-                        </Button>
+                        ACCESS CODE
+                      </Button>
+                      {isOwner() && (
                         <Button
                           onClick={() => setEditMode(!editMode)}
                           color='primary'
@@ -240,9 +238,9 @@ const GroupDetail = () => {
                         >
                           {editMode ? 'VOLVER' : 'EDITAR'}
                         </Button>
-                      </div>
-                    </Container>
-                  )}
+                      )}
+                    </div>
+                  </Container>
 
                   {!editMode ? (
                     <div
@@ -336,8 +334,7 @@ const GroupAccessCodeModal = ({ isOpen, setIsOpen, accessCode, groupID }) => {
                 INFORMACION DE ACCESO
               </Typography>
               <Typography align='center' style={{ paddingTop: '1rem' }}>
-                Con esta informacion alguien se puede unir al grupo. Falicito.
-                Facilito? Ok.😄
+                Con esta informacion alguien se puede unir al grupo 🗝️.
               </Typography>
               <div
                 style={{
@@ -347,12 +344,10 @@ const GroupAccessCodeModal = ({ isOpen, setIsOpen, accessCode, groupID }) => {
                 }}
               >
                 <Typography>
-                  <span style={{ fontWeight: 'bold' }}>GROUP ID</span>:{' '}
-                  {groupID}
+                  <span style={{ fontWeight: 'bold' }}>GROUP ID</span>: {groupID}
                 </Typography>
                 <Typography>
-                  <span style={{ fontWeight: 'bold' }}>ACCESS CODE:</span>{' '}
-                  {accessCode}
+                  <span style={{ fontWeight: 'bold' }}>ACCESS CODE:</span> {accessCode}
                 </Typography>
                 <Button onClick={() => setIsOpen(false)}>OK DALE</Button>
               </div>

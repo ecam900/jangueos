@@ -19,6 +19,7 @@ import { motion } from 'framer-motion';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
+    zIndex: 9,
     left: '0%',
     top: '0%',
     width: '100vw',
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: `rgba(46, 49, 49, .5)`,
+    backgroundColor: `rgba(46, 49, 49, .6)`,
   },
   form: { display: 'flex', flexDirection: 'column' },
   inputs: {
@@ -100,10 +101,7 @@ const CreatePost = ({ room, id, setOpenCreate, createPost, loading }) => {
           <Typography align='center' variant='h3'>
             Crea Tu Post
           </Typography>
-          <div
-            onClick={() => setOpenCreate(false)}
-            className={classes.backButton}
-          >
+          <div onClick={() => setOpenCreate(false)} className={classes.backButton}>
             <ChevronLeft />
             <Typography style={{ fontSize: '1rem' }}>P'atras</Typography>
           </div>
