@@ -3,7 +3,7 @@ I made this app for a book club I organized. The drive behind it was that many f
 
 # Features:
 - Private Groups with access code invitation
-- Markdown Support for Group Descriptions, Posts and Post Replies.
+- Markdown Support for Group Descriptions, and Posts.
 - Rooms within groups (for chapter discussions, for example).
 - Authentication with Firebase, with Password or Magic Link signin.
 
