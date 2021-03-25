@@ -98,10 +98,9 @@ const PasswordLogin = ({
       })
       .catch((err) => {
         console.log('ERROR: ', err);
-        enqueueSnackbar(
-          'O metiste la pata..o meti la pata. Trata de nuevo plis.',
-          { variant: 'error' }
-        );
+        enqueueSnackbar('O metiste la pata..o meti la pata. Trata de nuevo plis.', {
+          variant: 'error',
+        });
       });
   };
 
@@ -115,14 +114,18 @@ const PasswordLogin = ({
       </Typography>
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          as={TextField}
-          defaultValue=''
-          variant='outlined'
-          id='email-input'
-          label='email'
-          name='email'
           control={control}
-          className={classes.inputs}
+          defaultValue=''
+          name='email'
+          id='email-input'
+          render={(props) => (
+            <TextField
+              {...props}
+              className={classes.inputs}
+              label='email'
+              variant='outlined'
+            />
+          )}
         />
         <Typography className={classes.error} variant='body2'>
           {errors.email?.message}
