@@ -133,7 +133,7 @@ const EmailLogin = ({ auth, usePassword, setUsePassword }) => {
           align='center'
           className={classes.prefPassword}
         >
-          😅 cul - pero <span style={{ fontWeight: 'bold' }}>prefiero password </span>🙃🙈
+          😅 cul - pero <span style={{ fontWeight: 'bold' }}>prefiero password </span>🙃
         </Typography>
       </form>
     </Paper>
