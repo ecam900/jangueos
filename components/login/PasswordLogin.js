@@ -8,6 +8,7 @@ import {
   InputLabel,
   IconButton,
   InputAdornment,
+  Input,
 } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -119,7 +120,7 @@ const PasswordLogin = ({
           name='email'
           id='email-input'
           render={(props) => (
-            <TextField
+            <Input
               {...props}
               className={classes.inputs}
               label='email'
