@@ -164,8 +164,6 @@ const PasswordLogin = ({
           )}
         />
 
-        <input />
-
         <Typography className={classes.error} variant='body2'>
           {errors.password?.message.toString()}
         </Typography>

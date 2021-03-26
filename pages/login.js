@@ -92,7 +92,7 @@ const Login = () => {
 
   return (
     <div className={classes.root}>
-      <AnimatePresence exitBeforeEnter>
+      {/* <AnimatePresence exitBeforeEnter>
         {usePassword ? (
           <motion.div
             key='password'
@@ -126,7 +126,7 @@ const Login = () => {
             />
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <input />
     </div>

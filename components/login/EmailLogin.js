@@ -106,7 +106,7 @@ const EmailLogin = ({ auth, usePassword, setUsePassword }) => {
       </Typography>
 
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        {/* <Controller
+        <Controller
           as={TextField}
           defaultValue=''
           variant='outlined'
@@ -115,7 +115,7 @@ const EmailLogin = ({ auth, usePassword, setUsePassword }) => {
           name='email'
           control={control}
           className={classes.inputs}
-        /> */}
+        />
         <Typography className={classes.error} variant='body2'>
           {errors.email?.message}
         </Typography>
