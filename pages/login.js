@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  makeStyles,
-  Typography,
-  Paper,
-  TextField,
-  Button,
-} from '@material-ui/core';
+import { makeStyles, Typography, Paper, TextField, Button } from '@material-ui/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -78,17 +72,15 @@ const Login = () => {
             variant: 'success',
           });
         } else {
-          enqueueSnackbar(
-            'O metiste la pata..o meti la pata. Trata de nuevo plis.',
-            { variant: 'error' }
-          );
+          enqueueSnackbar('O metiste la pata..o meti la pata. Trata de nuevo plis.', {
+            variant: 'error',
+          });
         }
       })
       .catch((err) => {
-        enqueueSnackbar(
-          'O metiste la pata..o meti la pata. Trata de nuevo plis.',
-          { variant: 'error' }
-        );
+        enqueueSnackbar('O metiste la pata..o meti la pata. Trata de nuevo plis.', {
+          variant: 'error',
+        });
         enqueueSnackbar(`${err}`, { variant: 'error' });
       });
   };
@@ -135,6 +127,8 @@ const Login = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <input />
     </div>
   );
 };
