@@ -116,6 +116,7 @@ const PasswordLogin = ({
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
+          className={classes.inputs}
           defaultValue=''
           name='email'
           id='email-input'
@@ -125,6 +126,8 @@ const PasswordLogin = ({
               className={classes.inputs}
               label='email'
               variant='outlined'
+              autoComplete='false'
+              type='text'
             />
           )}
         />
