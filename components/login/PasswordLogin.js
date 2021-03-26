@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   loginPaper: {
     display: 'flex',
     flexDirection: 'column',
+    zIndex: 9,
     padding: theme.spacing(6),
     width: '50%',
     [theme.breakpoints.down('sm')]: {
@@ -160,7 +161,8 @@ const PasswordLogin = ({
           )}
         />
 
-        <TextField />
+        <input />
+
         <Typography className={classes.error} variant='body2'>
           {errors.password?.message.toString()}
         </Typography>
