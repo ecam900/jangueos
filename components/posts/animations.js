@@ -7,7 +7,7 @@ export const listVariants = {
     transition: {
       ease: 'easeIn',
       // when: 'beforeChildren',
-      staggerChildren: 0.3,
+      staggerChildren: 0.2,
       delayChildren: 0.3,
       duration: 0.7,
     },

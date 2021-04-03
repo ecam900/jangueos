@@ -40,7 +40,9 @@ const PostList = ({ posts }) => {
                 className={classes.postItem}
                 variants={listItemVariants}
                 onClick={() =>
-                  router.push(`${router.asPath}/${post?.postID}`)
+                  router.push(`${router.asPath}/${post?.postID}`, undefined, {
+                    scroll: true,
+                  })
                 }
               >
                 <PostItem post={post} />
