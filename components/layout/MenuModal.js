@@ -98,7 +98,7 @@ const MenuModal = ({ signOut, open, setOpen, auth, router }) => {
             <NotificationsPanel setOpen={setOpen} open={open} auth={auth} />
           </Container>
           <Container align='center' className={classes.actionsArea}>
-            <Button>LOGOUT</Button>
+            <Button onClick={() => auth.signOut()}>LOGOUT</Button>
           </Container>
         </motion.div>
       )}

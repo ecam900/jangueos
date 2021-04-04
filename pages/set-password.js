@@ -104,7 +104,7 @@ const SetPassword = () => {
   };
 
   useEffect(() => {
-    if (auth.userData.hasPassword) {
+    if (auth?.userData?.hasPassword) {
       router.push('/');
     }
   }, [auth.userData, auth.loading]);
