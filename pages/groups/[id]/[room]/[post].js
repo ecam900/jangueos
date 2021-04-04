@@ -188,11 +188,21 @@ const Post = () => {
               )}
 
               {!editMode ? (
-                <ReactMarkdownWithHtml
-                  source={postData.description}
-                  allowDangerousHtml
-                  renderers={renderers}
-                />
+                <>
+                  <div>
+                    <Typography color='primary' variant='body1'>
+                      Posteado por {postData.authorName}
+                    </Typography>
+                    <Typography color='primary' variant='body1'>
+                      {postData.dateCreated.toDate().toDateString()}
+                    </Typography>
+                  </div>
+                  <ReactMarkdownWithHtml
+                    source={postData.description}
+                    allowDangerousHtml
+                    renderers={renderers}
+                  />
+                </>
               ) : (
                 <TextField
                   value={editData}
