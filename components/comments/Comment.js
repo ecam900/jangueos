@@ -14,6 +14,9 @@ import { useAuth } from '@/lib/auth';
 import { CloseOutlined, Delete, SaveAltOutlined, SaveOutlined } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
 import firebase from '../../lib/firebase';
+import { useRouter } from 'next/router';
+
+const db = firebase.firestore();
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +39,9 @@ const Comment = ({ commentData }) => {
   const auth = useAuth();
   const [formattedDate, setFormattedDate] = useState(null);
   const [editCommentOpen, setEditCommentOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [editData, setEditData] = useState(null);
+  const router = useRouter();
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -47,7 +52,55 @@ const Comment = ({ commentData }) => {
     return false;
   };
 
-  const saveCommentUpdate = async () => {};
+  const saveCommentUpdate = async () => {
+    setLoading(true);
+    await db
+      .collection('groups')
+      .doc(commentData.group)
+      .collection('rooms')
+      .doc(commentData.room)
+      .collection('posts')
+      .doc(commentData.post)
+      .collection('comments')
+      .doc(commentData.commentID)
+      .set({ content: editData }, { merge: true })
+      .then(() => {
+        enqueueSnackbar('Comentario editado 👍', { variant: 'success' });
+        setEditCommentOpen(false);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log('ERROR SAVING COMMENT: ', err);
+        enqueueSnackbar(`Hubo un error editando el comment... ${err}`, {
+          variant: 'error',
+        });
+      });
+  };
+
+  const deleteComment = async () => {
+    setLoading(true);
+    await db
+      .collection('groups')
+      .doc(commentData.group)
+      .collection('rooms')
+      .doc(commentData.room)
+      .collection('posts')
+      .doc(commentData.post)
+      .collection('comments')
+      .doc(commentData.commentID)
+      .set({ content: '[DELETED]' }, { merge: true })
+      .then(() => {
+        enqueueSnackbar('Comentario Borrado 🔥', { variant: 'success' });
+        setEditCommentOpen(false);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log('ERROR SAVING COMMENT: ', err);
+        enqueueSnackbar(`Hubo un error borrando el comentario 😞... ${err}`, {
+          variant: 'error',
+        });
+      });
+  };
 
   useEffect(() => {
     const formatDate = async () => {
@@ -101,6 +154,20 @@ const Comment = ({ commentData }) => {
             >
               {isOwner() && (
                 <>
+                  {editCommentOpen && (
+                    <>
+                      <IconButton className={classes.editComment} onClick={deleteComment}>
+                        <Delete color='error' />
+                      </IconButton>
+
+                      <IconButton
+                        className={classes.editComment}
+                        onClick={saveCommentUpdate}
+                      >
+                        <SaveOutlined color='primary' />
+                      </IconButton>
+                    </>
+                  )}
                   <IconButton
                     className={classes.editComment}
                     onClick={() => {
@@ -113,24 +180,6 @@ const Comment = ({ commentData }) => {
                       <CreateTwoToneIcon color='primary' />
                     )}
                   </IconButton>
-
-                  {editCommentOpen && (
-                    <>
-                      <IconButton
-                        className={classes.editComment}
-                        onClick={() => console.log('Delete Comment Pressed')}
-                      >
-                        <Delete color='error' />
-                      </IconButton>
-
-                      <IconButton
-                        className={classes.editComment}
-                        onClick={() => console.log('Save Comment Update Pressed')}
-                      >
-                        <SaveOutlined color='primary' />
-                      </IconButton>
-                    </>
-                  )}
                 </>
               )}
             </div>

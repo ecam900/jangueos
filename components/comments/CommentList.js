@@ -43,8 +43,12 @@ const CommentList = () => {
       {comments && (
         <>
           <AnimatePresence>
-            {comments.map((comment) => (
-              <Comment key={comment.commentID} commentData={comment} />
+            {comments.map((comment, i) => (
+              <Comment
+                id={`${comment.commentID}_${i}`}
+                key={comment.commentID}
+                commentData={comment}
+              />
             ))}
           </AnimatePresence>
         </>

@@ -60,7 +60,7 @@ const Post = () => {
   const { id, post, room } = router.query;
 
   const isOwner = () => {
-    if (auth.user.uid === postData.author) {
+    if (auth?.user?.uid === postData.author) {
       return true;
     }
     return false;
@@ -115,6 +115,8 @@ const Post = () => {
         group: id,
         room: room,
         post: post,
+        postAuthor: postData.author,
+        postTitle: postData.title,
         likes: 0,
       })
       .then((docRef) => {

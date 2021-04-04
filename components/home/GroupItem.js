@@ -1,10 +1,4 @@
-import {
-  Container,
-  Divider,
-  makeStyles,
-  Paper,
-  Typography,
-} from '@material-ui/core';
+import { Container, Divider, makeStyles, Paper, Typography } from '@material-ui/core';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -40,19 +34,11 @@ const GroupItem = ({ groupname, description, author, slug }) => {
         <motion.div whileTap={{ scale: 0.95 }}>
           <Link href={`/groups/${slug}`} passHref>
             <Paper className={classes.cardPaper}>
-              <Typography
-                color='primary'
-                className={classes.title}
-                variant='h3'
-              >
+              <Typography color='primary' className={classes.title} variant='h4'>
                 {groupname}
               </Typography>
               <Typography>{description}</Typography>
-              <Typography
-                className={classes.author}
-                align='right'
-                variant='subtitle1'
-              >
+              <Typography className={classes.author} align='right' variant='subtitle1'>
                 author: {author}
               </Typography>
             </Paper>

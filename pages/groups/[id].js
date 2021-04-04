@@ -212,7 +212,7 @@ const GroupDetail = () => {
                 )}
 
                 <Paper elevation={4} className={classes.groupDescriptionSection}>
-                  <Typography align='center' variant='h3'>
+                  <Typography align='center' variant='h4' style={{ opacity: 0.9 }}>
                     Descripcion de Grupo
                   </Typography>
                   <Container align='right'>

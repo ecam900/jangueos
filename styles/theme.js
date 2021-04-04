@@ -1,14 +1,18 @@
+import { red } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 // Create a theme instance.
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    // type: 'dark',
     primary: {
       main: '#8AA39B',
     },
     secondary: {
       main: '#8AA39B',
+    },
+    error: {
+      main: red[800],
     },
   },
   typography: {
@@ -19,12 +23,16 @@ const theme = createMuiTheme({
       fontWeight: '400',
     },
     h2: {
-      fontFamily: `'Rubik', sans-serif`,
-      fontWeight: '400',
+      fontFamily: "'Montserrat', sans-serif",
+      fontWeight: 'bold',
     },
     h3: {
-      fontFamily: `'Rubik', sans-serif`,
-      fontWeight: '400',
+      fontFamily: "'Montserrat', sans-serif",
+      fontWeight: 'bold',
+    },
+    h4: {
+      fontFamily: "'Montserrat', sans-serif",
+      fontWeight: '600',
     },
   },
   overrides: {

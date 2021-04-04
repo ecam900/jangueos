@@ -88,8 +88,8 @@ const CreateCommentModal = ({ post, setCreateCommentOpen, loading, createComment
   }, []);
   return (
     <motion.div
-      initial={{ x: -1000, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className={classes.root}
     >
@@ -112,7 +112,7 @@ const CreateCommentModal = ({ post, setCreateCommentOpen, loading, createComment
                 <TextField
                   {...props}
                   className={classes.inputs}
-                  label='⌨️ 🔥Dile ahi...'
+                  label='🔥Dile ahi...'
                   autoComplete='false'
                   variant='outlined'
                   fullWidth
@@ -125,7 +125,7 @@ const CreateCommentModal = ({ post, setCreateCommentOpen, loading, createComment
             <Typography className={classes.error} variant='body2'>
               {errors.description?.message}
             </Typography>
-            <Button disaabled={loading.toString()} type='submit'>
+            <Button disabled={loading} type='submit'>
               {loading ? 'PERATE' : 'CREAR'}
             </Button>
           </form>

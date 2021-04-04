@@ -203,7 +203,17 @@ const Layout = ({ children }) => {
         </Typography>
       </div>
 
-      <MenuModal open={open} signOut={signOut} setOpen={setOpen} />
+      <AnimatePresence exitBeforeEnter>
+        {open && (
+          <MenuModal
+            open={open}
+            signOut={signOut}
+            setOpen={setOpen}
+            auth={auth}
+            router={router}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

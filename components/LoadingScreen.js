@@ -10,6 +10,7 @@ const LoadingScreen = () => {
         alignContent: 'center',
         justifyItems: 'center',
         justifyContent: 'center',
+        zIndex: 9,
       }}
     >
       <Typography

@@ -1,4 +1,4 @@
-import { Container, makeStyles, Typography } from '@material-ui/core';
+import { Container, makeStyles, Paper, Typography } from '@material-ui/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -37,7 +37,6 @@ const PostList = ({ posts }) => {
               <motion.div
                 key={post.title}
                 whileTap={{ scale: 0.96 }}
-                className={classes.postItem}
                 variants={listItemVariants}
                 onClick={() =>
                   router.push(`${router.asPath}/${post?.postID}`, undefined, {
@@ -45,7 +44,9 @@ const PostList = ({ posts }) => {
                   })
                 }
               >
-                <PostItem post={post} />
+                <Paper className={classes.postItem}>
+                  <PostItem post={post} />
+                </Paper>
               </motion.div>
             );
           })}

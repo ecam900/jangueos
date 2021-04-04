@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
+    height: '100vh',
   },
   title: { padding: theme.spacing(2), fontSize: '2rem' },
   form: {
@@ -81,15 +81,18 @@ const SetPassword = () => {
   };
 
   const onSubmit = async (values) => {
-    await auth.setUserPassword(values.password).then((response) => {
+    await auth.setUserPassword(values.password).then(async (response) => {
       enqueueSnackbar('Perfect! Ya tienes password.', { variant: 'default' });
-      auth
+      await auth
         .setUsername(values.username)
         .then((response) => {
           enqueueSnackbar(`Los otros te veran como: ${values.username}`, {
             variant: 'default',
           });
           router.push('/');
+        })
+        .then(() => {
+          router.reload();
         })
         .catch((err) => {
           enqueueSnackbar(`Wepa lo jodiste de alguna manera - vamos a ver...`, {
@@ -101,18 +104,17 @@ const SetPassword = () => {
   };
 
   useEffect(() => {
-    if (auth.userData) {
+    if (auth.userData.hasPassword) {
       router.push('/');
     }
-  }, [auth.userData]);
+  }, [auth.userData, auth.loading]);
 
   return (
     <div className={classes.root}>
       <Paper className={classes.formPaper}>
         <Typography className={classes.title} align='center' variant='h3'>
-          Crea un{' '}
-          <span style={{ color: theme.palette.primary.main }}>Username</span> y
-          un <span style={{ color: theme.palette.primary.main }}>Password</span>
+          Crea un <span style={{ color: theme.palette.primary.main }}>Username</span> y un{' '}
+          <span style={{ color: theme.palette.primary.main }}>Password</span>
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
@@ -130,11 +132,7 @@ const SetPassword = () => {
               />
             )}
           />
-          <Typography
-            variant='caption'
-            className={classes.errorMessage}
-            align='left'
-          >
+          <Typography variant='caption' className={classes.errorMessage} align='left'>
             {errors.username?.message.toString()}
           </Typography>
           <Controller
@@ -158,11 +156,7 @@ const SetPassword = () => {
                         onMouseDown={handleMouseDownPassword}
                         edge='end'
                       >
-                        {values.showPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
+                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -170,11 +164,7 @@ const SetPassword = () => {
               />
             )}
           />
-          <Typography
-            variant='caption'
-            className={classes.errorMessage}
-            align='left'
-          >
+          <Typography variant='caption' className={classes.errorMessage} align='left'>
             {errors.password?.message.toString()}
           </Typography>
           <Controller
@@ -188,33 +178,11 @@ const SetPassword = () => {
                 label='Confirm Password'
                 variant='outlined'
                 autoComplete='false'
-                type={values.showPassword ? 'text' : 'password'}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton
-                        aria-label='toggle password visibility'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge='end'
-                      >
-                        {values.showPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
+                type={'password'}
               />
             )}
           />
-          <Typography
-            variant='caption'
-            className={classes.errorMessage}
-            align='center'
-          >
+          <Typography variant='caption' className={classes.errorMessage} align='center'>
             {errors.confirmPassword?.message}
           </Typography>
           <Button color='primary' type='submit'>
