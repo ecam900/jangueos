@@ -4,11 +4,13 @@ import {
   Container,
   IconButton,
   makeStyles,
+  Switch,
   Typography,
 } from '@material-ui/core';
 import { CancelTwoTone } from '@material-ui/icons';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { CustomThemeContext } from 'styles/themes/CustomThemeProvider';
 import NotificationsPanel from './NotificationsPanel';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +47,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  actionsArea: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   loadingPane: {
     height: '100vh',
     width: '100vw',
@@ -66,6 +75,33 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuModal = ({ signOut, open, setOpen, auth, router }) => {
   const classes = useStyles(open);
+  const { currentTheme, setTheme } = useContext(CustomThemeContext);
+  const [darkToggle, setDarkToggle] = useState(false);
+
+  // const handleThemeChange = (e) => {
+  //   // const { checked } = e.target;
+  //   if (checked) {
+  //     setTheme('darkTheme');
+  //   } else {
+  //     setTheme('lightTheme');
+  //   }
+  // };
+
+  const handleToggle = () => {
+    if (currentTheme === 'darkTheme') {
+      setTheme('lightTheme');
+    } else {
+      setTheme('darkTheme');
+    }
+  };
+
+  useEffect(() => {
+    if (currentTheme === 'darkTheme') {
+      setDarkToggle(true);
+    } else {
+      setDarkToggle(false);
+    }
+  }, [currentTheme]);
 
   return (
     <>
@@ -98,7 +134,15 @@ const MenuModal = ({ signOut, open, setOpen, auth, router }) => {
             <NotificationsPanel setOpen={setOpen} open={open} auth={auth} />
           </Container>
           <Container align='center' className={classes.actionsArea}>
-            <Button onClick={() => auth.signOut()}>LOGOUT</Button>
+            <Button style={{ maxWidth: '200px' }} onClick={() => auth.signOut()}>
+              LOGOUT
+            </Button>
+            <div>
+              <Typography variant='body2' color='primary' style={{ fontWeight: 'bold' }}>
+                Dark Mode
+              </Typography>
+              <Switch checked={darkToggle} onClick={handleToggle} />
+            </div>
           </Container>
         </motion.div>
       )}

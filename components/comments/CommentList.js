@@ -39,7 +39,7 @@ const CommentList = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ marginBottom: '1rem' }}>
       {comments && (
         <>
           <AnimatePresence>
