@@ -50,7 +50,7 @@ const NotificationsPanel = ({ auth, setOpen, open }) => {
       </Typography>
       <Container>
         <AnimatePresence>
-          {notifications ? (
+          {notifications?.length ? (
             notifications.map((noti, i) => (
               <NotificationItem
                 key={`noti_${i}`}
@@ -60,7 +60,9 @@ const NotificationsPanel = ({ auth, setOpen, open }) => {
               />
             ))
           ) : (
-            <LoadingScreen />
+            <Container align='center'>
+              <Typography>No tienes notificaciones 📢</Typography>
+            </Container>
           )}
         </AnimatePresence>
       </Container>
