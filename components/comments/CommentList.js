@@ -21,7 +21,7 @@ const CommentList = () => {
       .collection('posts')
       .doc(post)
       .collection('comments')
-      .orderBy('dateCreated', 'desc')
+      .orderBy('dateCreated', 'asc')
       .onSnapshot(
         (snapshot) => {
           const results = [];
