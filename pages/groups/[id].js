@@ -154,7 +154,7 @@ const GroupDetail = () => {
   };
 
   const isOwner = () => {
-    if (auth.user.uid === groupInfo.author) {
+    if (auth?.user?.uid === groupInfo?.author) {
       return true;
     }
 
